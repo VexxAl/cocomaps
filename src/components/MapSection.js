@@ -63,7 +63,7 @@ function MapSection() {
   if (loading) {
     return (
       <section className="map-section">
-        <div className="loader">Cargando mapa...</div>;
+        <div className="loader">Cargando mapa </div>;
       </section>
     );
     // Renderiza el cargador
@@ -72,9 +72,11 @@ function MapSection() {
   return (
     <section className="map-section">
       <MapContainer
-        center={[-31.6234, -60.7003]}
-        zoom={14}
-        style={{ width: '100%', height: '500px' }}
+        style={{ width: '100%', height: '500px' }}        
+        center={[-31.6263478, -60.717238]}
+        zoom={12}
+        maxBounds={[[-90, -180], [90, 180]]}
+        maxBoundsViscosity={1.0}
       >
         {/* Estilo de MapTiler: DATAVIZ.LIGHT */}
         <TileLayer

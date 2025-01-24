@@ -14,7 +14,7 @@
 }
 
 .main-section h1 {
-  font-size: 36px;
+  font-size: 3rem;
   font-family: 'Figtree', serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -27,6 +27,7 @@
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+  font-size: 1.4rem;
 }
 
 .main-container {

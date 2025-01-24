@@ -4,7 +4,7 @@
   align-items: center;
   padding: 10px 20px;
   background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 3px solid #E7BA61;
 }
 
 .logo {
@@ -80,13 +80,19 @@ img {
   margin: 3px 0;
 }
 
-/* Media query para pantallas pequeñas */
-@media (max-width: 768px) {
-  .nav {
-    display: none;
-  }
+.hamburger {
+  display: block;
+}
+.nav {
+  display: none;
+}
 
-  .hamburger {
+/* Media query para pantallas pequeñas */
+@media (min-width: 768px) {
+  .nav {
     display: flex;
+  }
+  .hamburger {
+    display: none;
   }
 }

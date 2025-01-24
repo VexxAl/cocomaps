@@ -1,6 +1,7 @@
 .footer {
   background-color: #faf8ed;
   padding: 20px;
+  border-top: 3px solid #E7BA61;
 }
 
 .footer-links {
@@ -27,7 +28,7 @@
 
 .social-media {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 1.2rem;
 }
 .info-fuente{
   text-align: center;
