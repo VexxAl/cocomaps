@@ -5,7 +5,7 @@ import MapSection from './components/MapSection';
 import Footer from './components/Footer';
 import './App.css';
 import RestaurantCards from './components/RestaurantCards'; // Ruta según tu estructura
-
+import Trial from './components/Trial';
 import restaurantData from './data/restaurants.json'; // Supongamos que tienes el JSON en este archivo
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
       <MainContent />
       <MapSection />
       <RestaurantCards restaurantes={restaurantData.restaurantes} />
+      <Trial/>
       <Footer />
     </div>
   );

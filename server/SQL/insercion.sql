@@ -11,7 +11,7 @@ INSERT INTO locaciones.direcciones (direccion, barrio, localidad_id)
 
 INSERT INTO comedores.encargados (nombre, apellido, telefono) 
     VALUES  ('Juan', 'Perez', '342-1234567'),
-            ('Maria', 'Gomez', '342-7654321')
+            ('Maria', 'Gomez', '342-7654321'),
             ('Pedro', 'Gonzalez', '342-1234567');
 
 INSERT INTO comedores.comedor (nombre, direccion_id, telefono, email, web, encargado_id, needs) 

@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -5,16 +6,22 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = 3001;
 
-// Middleware
-app.use(cors());
+// Configurar CORS
+app.use(cors({
+    origin: "http://localhost:3000", // Dirección del frontend
+    methods: ["GET", "POST", "DELETE"], // Métodos HTTP permitidos
+    allowedHeaders: ["Content-Type", "Authorization"] // Encabezados permitidos
+}));
+
+// Middleware para manejar datos JSON
 app.use(bodyParser.json());
 
-// Rutas básicas
+// Ruta de prueba
 app.get("/", (req, res) => {
-    res.send("¡Vamo COCOMAAAAAAAA!");
+    res.send("VAMO COCOMAAAAAA!!!!!");
 });
 
-// Endpoint para comedores
+// Rutas de API
 app.use("/api/comedores", require("./routes/comedores"));
 
 // Iniciar servidor

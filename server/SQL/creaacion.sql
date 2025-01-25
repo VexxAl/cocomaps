@@ -2,7 +2,7 @@ CREATE SCHEMA IF NOT EXISTS locaciones;
 
 CREATE TABLE locaciones.provincias (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE locaciones.localidades (
@@ -25,7 +25,7 @@ CREATE TABLE locaciones.direcciones (
 
 CREATE SCHEMA IF NOT EXISTS comedores;
 
-CREATE TABLE comendores.encargados (
+CREATE TABLE comedores.encargados (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE comendores.encargados (
 CREATE TABLE comedores.comedor (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    direccion_id VARCHAR(255) NOT NULL,
+    direccion_id INT NOT NULL,
     telefono VARCHAR(100) NULL,
     email VARCHAR(100) NULL,
     web VARCHAR(100) NULL,
