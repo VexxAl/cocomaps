@@ -1,0 +1,98 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 3px solid #E7BA61;
+}
+
+.logo {
+  font-size: 1.5em;
+  color: #141414;
+  font-weight: bolder;
+  margin-right: none;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #141414;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.mapa {
+  background-color: #e7ba61;
+  padding: 5px;
+  border-radius: 13%;
+}
+
+/* Oculta la navegación en pantallas pequeñas */
+.nav {
+  display: none;
+}
+
+.nav.open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 10;
+}
+
+.nav.open a {
+  margin: 10px 0;
+}
+
+/* SVG estilos */
+img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Menú hamburguesa */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #141414;
+  margin: 3px 0;
+}
+
+.hamburger {
+  display: block;
+}
+.nav {
+  display: none;
+}
+
+/* Media query para pantallas pequeñas */
+@media (min-width: 768px) {
+  .nav {
+    display: flex;
+  }
+  .hamburger {
+    display: none;
+  }
+}

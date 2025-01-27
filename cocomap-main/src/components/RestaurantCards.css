@@ -1,0 +1,40 @@
+.restaurant-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.restaurant-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 300px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-card h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.restaurant-card p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.restaurant-card a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.restaurant-card a:hover {
+  text-decoration: underline;
+}
+
+.restaurant-card ul {
+  padding-left: 20px;
+}
