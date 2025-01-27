@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './MapSection.css';
-import restaurantData from '../data/restaurants.json'; // Importar datos desde el archivo JSON
+import axios from 'axios';
 
 // Configurar el ícono predeterminado de Leaflet
 delete L.Icon.Default.prototype._getIconUrl; // Eliminar rutas predefinidas que pueden causar errores
@@ -22,7 +22,7 @@ function MapSection() {
 
   // Función para geocodificar direcciones con Nominatim
   const geocodeAddress = async (address) => {
-    const formattedAddress = `${address.calle}, ${address.ciudad}, ${address.provincia}, ${address.codigo_postal}`;
+    const formattedAddress = `${address}, Santa Fe, Argentina`;
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
       formattedAddress
     )}&format=json`;
@@ -47,14 +47,31 @@ function MapSection() {
 
   useEffect(() => {
     const fetchLocations = async () => {
-      const locations = await Promise.all(
-        restaurantData.restaurantes.map(async (restaurante) => {
-          const coordinates = await geocodeAddress(restaurante.direccion);
-          return coordinates ? { ...restaurante, coordinates } : null;
-        })
-      );
-      setRestaurantLocations(locations.filter((loc) => loc !== null));
-      setLoading(false); // Desactiva el cargador una vez completado
+      try {
+        const response = await axios.get("http://localhost:3001/api/comedores");
+        const locations = await Promise.all(
+          response.data.map(async (restaurante) => {
+            if (restaurante.coordenadas) {
+              return { ...restaurante, coordinates: restaurante.coordenadas };
+            } else {
+              const fullAddress = `${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`;
+              const coordinates = await geocodeAddress(fullAddress);
+              if (coordinates) {
+                // Actualizar la base de datos con las coordenadas
+                await axios.post(`http://localhost:3001/api/comedores/${restaurante.id}/update-coordinates`, { coordinates });
+                return { ...restaurante, coordinates };
+              } else {
+                return null;
+              }
+            }
+          })
+        );
+        setRestaurantLocations(locations.filter((loc) => loc !== null));
+        setLoading(false); // Desactiva el cargador una vez completado
+      } catch (error) {
+        console.error("Error al obtener los comedores:", error);
+        setLoading(false);
+      }
     };
 
     fetchLocations();
@@ -72,7 +89,7 @@ function MapSection() {
   return (
     <section className="map-section">
       <MapContainer
-        style={{ width: '100%', height: '500px' }}        
+        style={{ width: '100%', height: '500px' }}
         center={[-31.6263478, -60.717238]}
         zoom={12}
         maxBounds={[[-90, -180], [90, 180]]}
@@ -93,25 +110,17 @@ function MapSection() {
             <Popup>
               <h3>{restaurante.nombre}</h3>
               <p>
-                <strong>Dirección:</strong>{' '}
-                {`${restaurante.direccion.calle}, ${restaurante.direccion.ciudad}`}
+                <strong>Dirección:</strong> {`${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`}
+
               </p>
               <p>
-                <strong>Teléfono:</strong> {restaurante.contacto.telefono}
+                <strong>Teléfono:</strong> {restaurante.telefono}
               </p>
               <p>
-                <strong>Email:</strong>{' '}
-                <a href={`mailto:${restaurante.contacto.email}`}>
-                  {restaurante.contacto.email}
-                </a>
-              </p>
-              <p>
-                <strong>Horario:</strong> L-V:{' '}
-                {restaurante.horario.lunes_a_viernes}, S:{' '}
-                {restaurante.horario.sabado}, D: {restaurante.horario.domingo}
+                <strong>Email:</strong> <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
               </p>
               <a
-                href={restaurante.contacto.sitio_web}
+                href={restaurante.web}
                 target="_blank"
                 rel="noreferrer"
               >

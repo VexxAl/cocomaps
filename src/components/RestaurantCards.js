@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './RestaurantCards.css';
 
-function RestaurantCards({ restaurantes }) {
+function RestaurantCards() {
+  const [restaurantes, setRestaurantes] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/comedores")
+      .then((response) => setRestaurantes(response.data))
+      .catch((error) => console.error("Error al obtener los comedores:", error));
+  }, []);
+
   return (
     <div className="restaurant-cards-container">
       {restaurantes.map((restaurante, index) => (
@@ -9,25 +18,25 @@ function RestaurantCards({ restaurantes }) {
           <h2>{restaurante.nombre}</h2>
           <p>
             <strong>Dirección:</strong>{' '}
-            {`${restaurante.direccion.calle}, ${restaurante.direccion.ciudad}, ${restaurante.direccion.provincia} (${restaurante.direccion.codigo_postal})`}
+            {`${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`}
           </p>
           <p>
-            <strong>Teléfono:</strong> {restaurante.contacto.telefono}
+            <strong>Teléfono:</strong> {restaurante.telefono}
           </p>
           <p>
             <strong>Email:</strong>{' '}
-            <a href={`mailto:${restaurante.contacto.email}`}>
-              {restaurante.contacto.email}
+            <a href={`mailto:${restaurante.email}`}>
+              {restaurante.email}
             </a>
           </p>
           <p>
             <strong>Sitio web:</strong>{' '}
             <a
-              href={restaurante.contacto.sitio_web}
+              href={restaurante.web}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {restaurante.contacto.sitio_web}
+              {restaurante.web}
             </a>
           </p>
           <p>
@@ -35,13 +44,13 @@ function RestaurantCards({ restaurantes }) {
             <ul>
               <li>
                 <strong>Lunes a viernes:</strong>{' '}
-                {restaurante.horario.lunes_a_viernes}
+                {restaurante.horario_lunes_a_viernes}
               </li>
               <li>
-                <strong>Sábado:</strong> {restaurante.horario.sabado}
+                <strong>Sábado:</strong> {restaurante.horario_sabado}
               </li>
               <li>
-                <strong>Domingo:</strong> {restaurante.horario.domingo}
+                <strong>Domingo:</strong> {restaurante.horario_domingo}
               </li>
             </ul>
           </p>

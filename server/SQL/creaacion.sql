@@ -18,6 +18,11 @@ CREATE TABLE locaciones.direcciones (
     direccion VARCHAR(100) NOT NULL,
     barrio VARCHAR(100) NULL,
     localidad_id INT NOT NULL,
+    calle VARCHAR(100),
+    ciudad VARCHAR(100),
+    provincia VARCHAR(100),
+    codigo_postal VARCHAR(20),
+    coordenadas JSONB,
     FOREIGN KEY (localidad_id) REFERENCES locaciones.localidades(id)
 );
 
@@ -41,6 +46,9 @@ CREATE TABLE comedores.comedor (
     web VARCHAR(100) NULL,
     encargado_id INT NOT NULL,
     needs TEXT[], -- Array para almacenar necesidades (ej: ["Arroz", "Aceite"])
+    horario_lunes_a_viernes VARCHAR(100),
+    horario_sabado VARCHAR(100),
+    horario_domingo VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (direccion_id) REFERENCES locaciones.direcciones(id),
     FOREIGN KEY (encargado_id) REFERENCES comedores.encargados(id)
