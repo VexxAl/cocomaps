@@ -12,8 +12,8 @@ function Header() {
   return (
     <header className="header">
       <div className="logo-container">
-      <div className="logo">COCOMAP</div>
       <img src={escudoSantaFe} alt="Escudo de Santa Fe" />
+      <div className="logo">COCOMAP</div>
       </div>
       <div className="hamburger" onClick={toggleMenu}>
         <div></div>
@@ -24,7 +24,7 @@ function Header() {
         <a className="mapa" href="#mapa">
           Mapa
         </a>
-        <a href="#informacion">Información</a>
+        <a href="#comedores">Comedores</a>
         <a href="#contacto">Contacto</a>
       </nav>
     </header>

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../config/db"); // Conexión a PostgreSQL
+const pool = require("../config/db");
 
 // Obtener todos los comedores
 router.get("/", async (req, res) => {
@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
         res.json(result.rows); // Enviar los datos como JSON
     } catch (error) {
         console.error("Error al obtener los comedores:", error);
-        res.status(500).json({ error: "Error al obtener los comedores" });
+        res.status(500).json({ error: "Error al obtener los comedores", details: error.message});
     }
 });
 

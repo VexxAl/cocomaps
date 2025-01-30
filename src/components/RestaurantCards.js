@@ -6,13 +6,23 @@ function RestaurantCards() {
   const [restaurantes, setRestaurantes] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/comedores")
-      .then((response) => setRestaurantes(response.data))
-      .catch((error) => console.error("Error al obtener los comedores:", error));
+    axios.get(process.env.REACT_APP_BACKEND_URL)
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setRestaurantes(response.data);
+        } else {
+          console.error("Error la API no devolvio un array", response.data);  
+          setRestaurantes([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al obtener los comedores:", error);
+        setRestaurantes([]);
+      });
   }, []);
 
   return (
-    <div className="restaurant-cards-container">
+    <div className="restaurant-cards-container" id="comedores">
       {restaurantes.map((restaurante, index) => (
         <div className="restaurant-card" key={index}>
           <h2>{restaurante.nombre}</h2>

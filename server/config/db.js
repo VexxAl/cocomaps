@@ -1,15 +1,10 @@
+require("dotenv").config(); // Cargar variables de entorno primero
+
 const { Pool } = require("pg");
 
-// Claramente no te voy a pasar mis datos, pirata.
 const pool = new Pool({
-    user: "avnadmin",
-    host: "pg-182caa88-agusmarzioni24-366d.b.aivencloud.com",
-    database: "defaultdb",
-    password: "AVNS_fEzoRDOEpitlExAOcDs",
-    port: 27264,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL, // Tomar la variable de entorno desde Vercel
+    ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false, 
 });
 
 module.exports = pool;
