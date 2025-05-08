@@ -5,22 +5,27 @@ import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './MapSection.css';
 
-// Configurar el ícono predeterminado de Leaflet
-delete L.Icon.Default.prototype._getIconUrl; // Eliminar rutas predefinidas que pueden causar errores
-
+// Configure default Leaflet icon
+delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png',
   iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
 });
 
 function MapSection() {
   const [restaurantLocations, setRestaurantLocations] = useState([]);
-  const [loading, setLoading] = useState(true); // Estado para el cargador
+  const [loading, setLoading] = useState(true);
   const mapTilerAPIKey = process.env.REACT_APP_MAP_TILER_API_KEY;
+  
+  const customIcon = new L.Icon({
+    iconUrl: './icons/Icon3.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
 
-  // Función para geocodificar direcciones con Nominatim
+  // Function to geocode addresses with Nominatim
   const geocodeAddress = async (address) => {
     const formattedAddress = `${address}, Santa Fe, Argentina`;
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
@@ -44,7 +49,7 @@ function MapSection() {
       return null;
     }
   };
-
+  
   useEffect(() => {
     const fetchLocations = async () => {
       try {
@@ -57,7 +62,6 @@ function MapSection() {
               const fullAddress = `${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`;
               const coordinates = await geocodeAddress(fullAddress);
               if (coordinates) {
-                // Actualizar la base de datos con las coordenadas
                 await axios.post(process.env.REACT_APP_BACKEND_URL + `/${restaurante.id}/update-coordinates`, { coordinates });
                 return { ...restaurante, coordinates };
               } else {
@@ -67,7 +71,7 @@ function MapSection() {
           })
         );
         setRestaurantLocations(locations.filter((loc) => loc !== null));
-        setLoading(false); // Desactiva el cargador una vez completado
+        setLoading(false);
       } catch (error) {
         console.error("Error al obtener los comedores:", error);
         setLoading(false);
@@ -80,10 +84,9 @@ function MapSection() {
   if (loading) {
     return (
       <section className="map-section">
-        <div className="loader">Cargando mapa </div>;
+        <div className="loader">Cargando mapa</div>
       </section>
     );
-    // Renderiza el cargador
   }
 
   return (
@@ -95,23 +98,21 @@ function MapSection() {
         maxBounds={[[-90, -180], [90, 180]]}
         maxBoundsViscosity={1.0}
       >
-        {/* Estilo de MapTiler: DATAVIZ.LIGHT */}
         <TileLayer
           url={`https://api.maptiler.com/maps/dataviz-light/{z}/{x}/{y}.png?key=${mapTilerAPIKey}`}
           attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
         />
 
-        {/* Renderizar marcadores una vez que las coordenadas estén listas */}
         {restaurantLocations.map((restaurante, index) => (
           <Marker
             key={index}
-            position={restaurante.coordinates} // Coordenadas geocodificadas
+            position={restaurante.coordinates}
+            icon={customIcon}
           >
             <Popup>
               <h3>{restaurante.nombre}</h3>
               <p>
                 <strong>Dirección:</strong> {`${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`}
-
               </p>
               <p>
                 <strong>Teléfono:</strong> {restaurante.telefono}
@@ -119,13 +120,11 @@ function MapSection() {
               <p>
                 <strong>Email:</strong> <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
               </p>
-              <a
-                href={restaurante.web}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Visitar sitio web
-              </a>
+              {restaurante.web && (
+                <a href={restaurante.web} target="_blank" rel="noreferrer">
+                  Visitar sitio web
+                </a>
+              )}
             </Popup>
           </Marker>
         ))}

@@ -7,12 +7,10 @@ function MainContent() {
       <div className="main-container">
         <h1>Mapa de comedores comunitarios de la ciudad de Santa Fe</h1>
         <p>
-          <b>COCOMAP</b> es una plataforma integral diseñada para centralizar y
-          gestionar las necesidades de los comedores comunitarios en nuestra
-          ciudad. Nuestro objetivo es conectar a los comedores con los vecinos
-          dispuestos a colaborar, facilitando el acceso a información clave como
-          su ubicación, horarios, responsables, y las necesidades específicas de
-          cada comedor.
+          El objetivo de <b>COCOMAP</b> es poder generar conexion entre los comedores
+          y los vecinos de nuestra querida ciudad.
+          Para ello, desde COCOMAP, facilitamos el acceso a información clave como pueden ser
+          la ubicación, los horarios, los responsables, y las necesidades específicas de cada comedor.
         </p>
       </div>
     </section>

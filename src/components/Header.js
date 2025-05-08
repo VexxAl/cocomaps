@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Header.css';
-import escudoSantaFe from './escudo-de-santa-fe.svg';
+import escudoSantaFe from './icons/escudo-de-santa-fe.svg';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

@@ -4,6 +4,15 @@
   border-top: 3px solid #E7BA61;
 }
 
+.footer a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
 .footer-links {
   display: flex;
   justify-content: center;

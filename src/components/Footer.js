@@ -11,13 +11,13 @@ function Footer() {
             <li>agusmarzioni24@gmail.com</li>
             <li>valentinalderete19@gmail.com</li>            
           </ul>
-          <p className="info-fuente">La información presentada en este sitio ha sido brindada por la Municipalidad de Santa Fe y está actualizada hasta enero 2025</p>
+          <p className="info-fuente">La información presentada en este sitio ha sido brindada por la Municipalidad de Santa Fe y está actualizada hasta mayo de 2025</p>
         </div>
       
       </div>
       <div className="social-media">
         <span>Creado en el marco del programa Eureka por</span>
-        <i> Valentín Alderete</i> y
+        <i> <a href="https://github.com/VexxAl" target="_blank" rel="noopener noreferrer"> Valentín Alderete </a></i> y
         <i> Agustín Marzioni </i>
         
       </div>
