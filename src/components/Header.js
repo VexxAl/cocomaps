@@ -12,8 +12,10 @@ function Header() {
   return (
     <header className="header">
       <div className="logo-container">
-      <img src={escudoSantaFe} alt="Escudo de Santa Fe" />
-      <div className="logo">COCOMAP</div>
+        <img src={escudoSantaFe} alt="Escudo de Santa Fe" />
+        <div className="logo">
+          <a href="#home">COCOMAP</a>
+        </div>
       </div>
       <div className="hamburger" onClick={toggleMenu}>
         <div></div>

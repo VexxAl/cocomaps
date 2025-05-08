@@ -4,6 +4,7 @@ import L from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './MapSection.css';
+import comedorIcon from './icons/Icon6.png'; // Cambia esto para probar diferentes iconos
 
 // Configure default Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -19,10 +20,11 @@ function MapSection() {
   const mapTilerAPIKey = process.env.REACT_APP_MAP_TILER_API_KEY;
   
   const customIcon = new L.Icon({
-    iconUrl: './icons/Icon3.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34]
+    iconUrl: comedorIcon,
+    iconRetinaUrl: comedorIcon,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
   });
 
   // Function to geocode addresses with Nominatim
@@ -102,6 +104,23 @@ function MapSection() {
           url={`https://api.maptiler.com/maps/dataviz-light/{z}/{x}/{y}.png?key=${mapTilerAPIKey}`}
           attribution='&copy; <a href="https://www.maptiler.com/">MapTiler</a> contributors'
         />
+
+        {/* Punto fijo para probar iconos
+        <Marker
+          position={[-31.630000, -60.720000]}
+          icon={new L.Icon({
+            iconUrl: comedorIcon,
+            iconRetinaUrl: comedorIcon,
+            iconSize: [38, 38],
+            iconAnchor: [19, 38],
+            popupAnchor: [0, -32]
+          })}
+        >
+          <Popup>
+            <h3>Punto de prueba</h3>
+            <p>Este es un punto fijo para hacer diferentes pruebas</p>
+          </Popup>
+        </Marker> */}
 
         {restaurantLocations.map((restaurante, index) => (
           <Marker
