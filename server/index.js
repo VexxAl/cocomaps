@@ -6,7 +6,7 @@ const app = express();
 app.use(cors(
     {
       credentials: true,
-      origin: ["https://cocomap.vercel.app", "http://localhost:3000"],
+      origin: ["https://cocomaps.com", "http://localhost:3000"],
       exposedHeaders: ["Content-Type", "Authorization"],
       methods: ["GET", "USE", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
