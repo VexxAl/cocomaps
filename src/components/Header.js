@@ -14,7 +14,7 @@ function Header() {
       <div className="logo-container">
         <img src={escudoSantaFe} alt="Escudo de Santa Fe" />
         <div className="logo">
-          <a href="#home">COCOMAP</a>
+          <a href="#home">COCOMAPS</a>
         </div>
       </div>
       <div className="hamburger" onClick={toggleMenu}>
