@@ -1,4 +1,4 @@
 .env
 .vercel
 node_modules
-build
+buildbackup_cocomap.sql
