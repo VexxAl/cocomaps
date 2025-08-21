@@ -6,7 +6,7 @@ const app = express();
 app.use(cors(
     {
       credentials: true,
-      origin: ["https://cocomaps.com", "http://localhost:3000", "http://31.97.240.242"],
+      origin: ["https://cocomaps.com", "https://www.cocomaps.com", "http://localhost:3000", "http://31.97.240.242"],
       exposedHeaders: ["Content-Type", "Authorization"],
       methods: ["GET", "USE", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
