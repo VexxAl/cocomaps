@@ -58,13 +58,76 @@ Visita la plataforma en funcionamiento: **[cocomaps.com](https://cocomaps.com)**
 - **Reducir** el impacto ambiental de desechos innecesarios
 - **Promover** la responsabilidad alimentaria comunitaria
 
-## 💻 Acceso a la Plataforma
+## 💻 Instalación y Desarrollo Local
 
-COCOMAPS es una plataforma centralizada que funciona exclusivamente a través de su sitio web oficial. No requiere instalación local ni configuración adicional.
+### Requisitos Previos
 
-**Acceso directo**: [cocomaps.com](https://cocomaps.com)
+- Node.js (v14 o superior)
+- npm o yarn
+- PostgreSQL (para el backend)
 
-*La plataforma está diseñada como un servicio único y centralizado para garantizar la consistencia de datos y la experiencia de usuario.*
+### 🚀 Instalación Rápida
+
+1. **Clonar el repositorio**
+
+    ```bash
+    git clone https://github.com/VexxAl/cocomaps.git
+    cd cocomaps
+    ```
+
+2. **Configurar variables de entorno**
+
+    ```bash
+    # Frontend
+    cp .env.example .env
+    # Edita .env con tus credenciales
+
+    # Backend
+    cd server
+    cp .env.example .env
+    # Edita server/.env con tus credenciales de base de datos
+    ```
+
+3. **Instalar dependencias**
+
+    ```bash
+    # Frontend
+    npm install
+
+    # Backend (en otra terminal)
+    cd server
+    npm install
+    ```
+
+4. **Configurar base de datos**
+
+    ```bash
+    # Crear la base de datos usando los scripts en server/SQL/
+    psql -U postgres
+    CREATE DATABASE cocomaps_db;
+    \c cocomaps_db
+    \i server/SQL/creacion.sql
+    \i server/SQL/insercion.sql
+    ```
+
+5. **Iniciar la aplicación**
+
+    ```bash
+    # Frontend (puerto 3000)
+    npm start
+
+    # Backend (puerto 3001, en otra terminal)
+    cd server
+    npm start
+    ```
+
+La aplicación estará disponible en `http://localhost:3000`
+
+### 🌐 Acceso a la Plataforma en Producción
+
+**Sitio en vivo**: [cocomaps.com](https://cocomaps.com)
+
+*La plataforma está diseñada como un servicio centralizado para garantizar la consistencia de datos y la experiencia de usuario.*
 
 ## 🎯 Público Objetivo
 
