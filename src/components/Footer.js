@@ -11,7 +11,9 @@ function Footer() {
             <li>agusmarzioni24@gmail.com</li>
             <li>valentinalderete19@gmail.com</li>            
           </ul>
-          <p className="info-fuente">La información presentada en este sitio ha sido brindada por la Municipalidad de Santa Fe y está actualizada hasta mayo de 2025</p>
+          <p className="info-fuente">
+            * Los datos publicados en este mapa son meramente representativos para demostrar el funcionamiento de la plataforma, mientras estamos a la espera de información oficial o colaboración comunitaria. No deben considerarse como información definitiva de ubicación o estado de los comedores.
+          </p>
         </div>
       
       </div>
