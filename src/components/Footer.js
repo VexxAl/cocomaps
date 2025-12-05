@@ -12,7 +12,8 @@ function Footer() {
             <li>valentinalderete19@gmail.com</li>            
           </ul>
           <p className="info-fuente">
-            * Los datos publicados en este mapa son meramente representativos para demostrar el funcionamiento de la plataforma, mientras estamos a la espera de información oficial o colaboración comunitaria. No deben considerarse como información definitiva de ubicación o estado de los comedores.
+            <strong>Nota:</strong> Los datos visualizados actualmente son demostrativos (mock data) a fines de probar la funcionalidad de la plataforma. 
+            Estamos a la espera de la integración con los datos oficiales municipales.
           </p>
         </div>
       

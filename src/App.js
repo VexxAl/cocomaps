@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom'; // Importamos Routes
+import React, { useEffect } from 'react'; // Importar useEffect
+import { Routes, Route, useLocation } from 'react-router-dom'; // Importar useLocation
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import MapSection from './components/MapSection';
@@ -9,6 +9,13 @@ import SearchBar from './components/SearchBar'; // Importar el nuevo componente
 import './App.css';
 
 function App() {
+  const { pathname } = useLocation();
+
+  // Cada vez que cambia la ruta, subimos arriba de todo
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <div className="App">
       <Header />

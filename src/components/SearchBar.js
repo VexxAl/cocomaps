@@ -9,7 +9,7 @@ function SearchBar({ onSearch }) {
       backgroundColor: '#232d4f', // Color institucional
       display: 'flex',
       justifyContent: 'center'
-    }}>
+    }} id='buscador'>
       <input 
         type="text" 
         placeholder="Buscar comedor o dirección..." 
