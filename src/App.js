@@ -29,6 +29,8 @@ function App() {
           </>
         } />
         
+        
+
         {/* Ruta Lista: Solo el listado de comedores */}
         <Route path="/comedores" element={
           <div style={{ marginTop: '20px' }}>

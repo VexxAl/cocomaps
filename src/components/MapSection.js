@@ -4,7 +4,7 @@ import L from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './MapSection.css';
-import comedorIcon from './icons/Icon6.png'; // Cambia esto para probar diferentes iconos
+import mapMarker from './icons/map-marker.png'; // Cambia esto para probar diferentes iconos
 
 // Configure default Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -20,11 +20,11 @@ function MapSection() {
   const mapTilerAPIKey = process.env.REACT_APP_MAP_TILER_API_KEY;
   
   const customIcon = new L.Icon({
-    iconUrl: comedorIcon,
-    iconRetinaUrl: comedorIcon,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
+    iconUrl: mapMarker, // Usamos la variable importada
+    iconRetinaUrl: mapMarker,
+    iconSize: [45, 45], // Ajustá este tamaño según cómo se vea tu PNG
+    iconAnchor: [22.5, 45], // El punto que toca el mapa (mitad ancho, alto total)
+    popupAnchor: [0, -45] // Donde sale el popup
   });
 
   // Function to geocode addresses with Nominatim
@@ -94,7 +94,7 @@ function MapSection() {
   return (
     <section className="map-section" id="mapa">
       <MapContainer
-        style={{ width: '100%', height: '500px' }}
+        style={{ width: '100%', height: '90vh' }}
         center={[-31.6263478, -60.717238]}
         zoom={12}
         maxBounds={[[-90, -180], [90, 180]]}

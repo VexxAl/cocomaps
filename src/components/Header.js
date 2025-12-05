@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom'; // Importamos hooks
 import './Header.css';
-import escudoSantaFe from './icons/escudo-de-santa-fe.svg';
+import logoCocomaps from './icons/isotype.svg';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,9 +36,9 @@ function Header() {
   return (
     <header className="header">
       <div className="logo-container">
-        <img src={escudoSantaFe} alt="Escudo de Santa Fe" />
+        {/* Usamos el nuevo logo SVG */}
+        <img src={logoCocomaps} alt="Logo COCOMAPS" className="header-logo" />
         <div className="logo">
-          {/* El logo siempre lleva arriba de todo en el Home */}
           <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             COCOMAPS
           </Link>

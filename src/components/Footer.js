@@ -8,11 +8,12 @@ function Footer() {
         <div>
           <h3>Contacto</h3>
           <ul>
-            <li>agusmarzioni24@gmail.com</li>
-            <li>valentinalderete19@gmail.com</li>            
+            <li>
+              <a href="mailto:valentinalderete19@gmail.com">valentinalderete19@gmail.com</a>
+            </li>            
           </ul>
           <p className="info-fuente">
-            <strong>Nota:</strong> Los datos visualizados actualmente son demostrativos (mock data) a fines de probar la funcionalidad de la plataforma. 
+            <strong>Nota:</strong> Los datos visualizados actualmente son demostrativos a fines de probar la funcionalidad de la plataforma. 
             Estamos a la espera de la integración con los datos oficiales municipales.
           </p>
         </div>
