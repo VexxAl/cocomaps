@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Importar Link
 import './Header.css';
 import escudoSantaFe from './icons/escudo-de-santa-fe.svg';
 
@@ -22,13 +23,16 @@ function Header() {
         <div></div>
         <div></div>
       </div>
-      <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-        <a className="mapa" href="#mapa">
-          Mapa
-        </a>
-        <a href="#comedores">Comedores</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
+    <nav className={`nav ${menuOpen ? 'open' : ''}`}>
+      {/* Cambiamos <a> por <Link> */}
+      <Link className="mapa" to="/" onClick={toggleMenu}>
+        Mapa
+      </Link>
+      <Link to="/comedores" onClick={toggleMenu}>
+        Listado Comedores
+      </Link>
+      <a href="#contacto" onClick={toggleMenu}>Contacto</a>
+    </nav>
     </header>
   );
 }

@@ -2,3 +2,4 @@
 .vercel
 node_modules
 buildbackup_cocomap.sql
+readme_server.md
