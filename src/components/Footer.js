@@ -11,7 +11,10 @@ function Footer() {
             <li>agusmarzioni24@gmail.com</li>
             <li>valentinalderete19@gmail.com</li>            
           </ul>
-          <p className="info-fuente">La información presentada en este sitio ha sido brindada por la Municipalidad de Santa Fe y está actualizada hasta mayo de 2025</p>
+          <p className="info-fuente">
+            <strong>Nota:</strong> Los datos visualizados actualmente son demostrativos (mock data) a fines de probar la funcionalidad de la plataforma. 
+            Estamos a la espera de la integración con los datos oficiales municipales.
+          </p>
         </div>
       
       </div>

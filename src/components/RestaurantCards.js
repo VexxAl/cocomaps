@@ -35,10 +35,22 @@ function RestaurantCards() {
       {restaurantes.map((restaurante, index) => (
         <div className="restaurant-card" key={restaurante.id || index}>
           <h2>{restaurante.nombre}</h2>
+          
+          {/* Agregamos la Asociación si es diferente al nombre (opcional) o siempre */}
+          {restaurante.asociacion && (
+            <p style={{ fontStyle: 'italic', color: '#666', marginBottom: '10px' }}>
+              <small>Asociación: {restaurante.asociacion}</small>
+            </p>
+          )}
+
           {restaurante.calle && (
             <p>
               <strong>Dirección:</strong>{' '}
-              {`${restaurante.calle}, ${restaurante.ciudad || ''}, ${restaurante.provincia || ''} ${restaurante.codigo_postal ? `(${restaurante.codigo_postal})` : ''}`}
+              {`${restaurante.calle}, ${restaurante.ciudad || ''}`}
+              {/* Mostramos el Distrito si existe */}
+              {restaurante.distrito && (
+                <span className="distrito-tag"> ({restaurante.distrito})</span>
+              )}
             </p>
           )}
           {restaurante.telefono && (

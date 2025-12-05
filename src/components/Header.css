@@ -95,10 +95,32 @@ img {
 
 /* Media query para pantallas pequeñas */
 @media (min-width: 768px) {
-  .nav {
-    display: flex;
-  }
   .hamburger {
-    display: none;
+    display: none; /* Ocultamos hamburguesa siempre */
+  }
+
+  .nav {
+    display: flex !important; /* Forzamos que se vea siempre */
+    flex-direction: row !important; /* Siempre horizontal */
+    position: static !important; /* Quitamos la posición absoluta del móvil */
+    background-color: transparent !important; /* Sin fondo blanco tapando todo */
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    top: auto;
+    right: auto;
+  }
+
+  /* Esto anula el comportamiento de la clase .open en escritorio */
+  .nav.open {
+    display: flex !important;
+    flex-direction: row !important;
+    position: static !important;
+    border: none !important;
+  }
+
+  .nav a,
+  .nav.open a {
+    margin: 0 15px; /* Espaciado entre links */
   }
 }
