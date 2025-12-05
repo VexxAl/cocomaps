@@ -1,21 +1,37 @@
-h1,
-p {
-  font-family: 'Figtree', serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
+:root {
+  /* --- Paleta "Guiso Compartido" --- */
+  
+  /* Principal / Identidad (Terracota Profundo) - Reemplaza al Azul Institucional */
+  --color-texto: #6E3B3B; 
+  
+  /* Acción / Resaltado - Reemplaza al Dorado */
+  --color-primario: #AC3F21; 
+  
+  /* Secundario - Para detalles */
+  --color-acento: #BE6A15;
+  
+  --color-secundario: #F3CF7A;
+
+  /* Fondo (Crema Suave) - Reemplaza al Blanco puro */
+  --color-fondo: #FFECC0;
+  
+  /* Fondo de Tarjetas (Blanco Hueso) */
+  --color-tarjeta: #FFF8E7;
 }
 
 body {
   margin: 0;
   font-family: 'Figtree', serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+h1, h2, h3, h4, h5, h6, p, a, li, span {
+  font-family: 'Figtree', serif;
 }
 
 .App {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
