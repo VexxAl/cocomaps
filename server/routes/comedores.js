@@ -9,6 +9,7 @@ router.get("/", async (req, res) => {
             SELECT 
                 c.id, 
                 c.nombre, 
+                c.asociacion,
                 c.telefono, 
                 c.email, 
                 c.web, 
@@ -19,6 +20,7 @@ router.get("/", async (req, res) => {
                 d.calle, 
                 d.ciudad, 
                 d.provincia, 
+                d.distrito, -- ¡Campo Nuevo!
                 d.codigo_postal,
                 d.coordenadas
             FROM comedores.comedor c
