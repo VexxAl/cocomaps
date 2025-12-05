@@ -10,7 +10,11 @@
 
 ## 🎯 Descripción del Proyecto
 
-COCOMAPS es una aplicación web diseñada para centralizar la información de comedores comunitarios en un solo espacio digital accesible. La plataforma permite visualizar la ubicación, horarios, responsables y necesidades específicas de cada comedor, facilitando la conexión entre comedores, donantes y voluntarios.
+**COCOMAPS** centraliza la información de comedores comunitarios en un espacio digital accesible. La plataforma permite visualizar ubicación, horarios, responsables y necesidades específicas, facilitando la conexión entre:
+
+- **Comedores** que necesitan visibilidad.
+- **Donantes y Voluntarios** que quieren ayudar.
+- **Vecino**s que requieren asistencia alimentaria.
 
 ### 🌟 Características Principales
 
@@ -21,95 +25,72 @@ COCOMAPS es una aplicación web diseñada para centralizar la información de co
 - **🚀 Infraestructura Profesional**: Servidor dedicado y dominio propio
 - **🔐 Seguridad**: Certificados SSL y sistema de respaldos automáticos
 
-## 🎪 Demo en Vivo
+## 🎪 Acceso a la Plataforma
 
-Visita la plataforma en funcionamiento: **[cocomaps.com](https://cocomaps.com)**
+**COCOMAPS** funciona exclusivamente web para garantizar que todos tengan la misma información actualizada al instante.
+
+🔗 Visita la plataforma: [cocomaps.com](https://cocomaps.com)
 
 *Nota: Actualmente muestra datos de ejemplo mientras se gestiona el acceso a información oficial municipal.*
+
+## 📈 Impacto Social y Objetivos
+
+Buscamos generar un impacto positivo mediante:
+
+1. **Centralización**: Toda la información que necesitamos para ayudar organizada y accesible en un solo lugar.
+2. **Transparencia**: Información clara y verificable de cada comedor.
+3. **Eficiencia**: Optimización en la distribución de recursos para reducir desperdicios.
+4. **Conectividad**: Crear una red sólida entre el sector social, gobierno y ciudadanos.
 
 ## 🏗️ Arquitectura Técnica
 
 ### Frontend
 
-- **Framework**: Tecnologías web modernas
-- **Diseño**: UX/UI intuitivo y accesible
-- **Mapas**: Integración de servicios de geolocalización
-- **Responsivo**: Compatible con todos los dispositivos
+- **Core**: React (SPA)
+- **Navegación**: React Router
+- **Diseño**: Responsive (Mobile-first), UX/UI accesible.
+- **Mapas**: Integración de servicios de geolocalización interactivos.
 
-### Backend
+### Infraestructura y Backend
 
-- **API**: Sistema de gestión de datos robusto
-- **Base de Datos**: Estructura escalable y optimizada
-- **Infraestructura**: Servidor VPS KVM2 dedicado
+- **Servidor**: VPS KVM2 Dedicado.
+- **Web Server**: Nginx (Reverse Proxy & Static serving).
+- **Seguridad**: HTTPS/SSL activo.
+- **Base de Datos**: Estructura relacional escalable con respaldos programados.
 
-### Infraestructura
+## 🚀 Estado del Proyecto & Roadmap
 
-- **Dominio**: `cocomaps.com` con protección de privacidad
-- **Servidor**: VPS profesional con alta disponibilidad
-- **Seguridad**: SSL y monitoreo continuo
-- **Respaldos**: Sistema automático de backups
+Última actualización: Diciembre 2025 - Versión 1.1
 
-## 🎭 Objetivos del Proyecto
+### ✅ Hitos Completados (Fase 1)
 
-- **Centralizar** información de comedores comunitarios
-- **Optimizar** la gestión y distribución de recursos
-- **Garantizar** transparencia y autenticidad
-- **Facilitar** conexiones entre comedores, donantes y voluntarios
-- **Reducir** el impacto ambiental de desechos innecesarios
-- **Promover** la responsabilidad alimentaria comunitaria
+Se ha logrado la operatividad total de la plataforma con una arquitectura robusta y datos reales.
 
-## 💻 Acceso a la Plataforma
+- [x] **Arquitectura SPA**: Migración exitosa a React Router para una navegación fluida sin recargas.
+- [x] **Experiencia de Usuario (UX)**: Implementación de Buscador (SearchBar) y filtros de navegación mejorados.
+- [x] **Datos Reales**: Carga masiva de comedores actualizada (Septiembre) con nuevas segmentaciones por Asociación y Distrito.
+- [x] **Infraestructura**: Despliegue en VPS con Nginx manejando rutas y certificados SSL (HTTPS) vía Hostinger.
 
-COCOMAPS es una plataforma centralizada que funciona exclusivamente a través de su sitio web oficial. No requiere instalación local ni configuración adicional.
+### 🚧 En Desarrollo (Prioridad Alta)
 
-**Acceso directo**: [cocomaps.com](https://cocomaps.com)
+El foco actual está en la identidad, el SEO y la autonomía de gestión.
 
-*La plataforma está diseñada como un servicio único y centralizado para garantizar la consistencia de datos y la experiencia de usuario.*
+- [ ] **Identidad & SEO**: Configuración de Favicon, Meta Tags (Open Graph para RRSS) y auditoría de accesibilidad/contraste.
+- [ ] **Panel de Administración (Backoffice)**: Desarrollo de login y sistema ABM (Alta, Baja, Modificación) para gestión de datos sin depender de SQL manual.
+- [ ] **Mantenimiento**: Automatización de backups de base de datos (Cronjobs).
 
-## 🎯 Público Objetivo
+### 🔮 Visión a Futuro
 
-- **Comedores Comunitarios**: Para gestionar perfiles y publicar necesidades
-- **Donantes**: Personas y organizaciones que desean colaborar
-- **Voluntarios**: Ciudadanos que quieren participar activamente
-- **ONGs**: Organizaciones sin fines de lucro del sector social
-- **Gobierno**: Entidades gubernamentales para políticas públicas
-- **Comunidad**: Vecinos que buscan información y formas de ayudar
+Próximas funcionalidades para escalar el impacto social.
 
-## 📈 Impacto Social
-
-COCOMAPS busca generar un impacto positivo mediante:
-
-- **Eficiencia**: Mejor distribución de recursos alimentarios
-- **Transparencia**: Información clara y verificable
-- **Conectividad**: Red sólida de apoyo comunitario
-- **Sostenibilidad**: Reducción de desperdicios alimentarios
-- **Inclusión**: Acceso equitativo a información y recursos
-
-## 🚀 Roadmap
-
-### Fase Actual ✅
-
-- [x] Desarrollo completo de la plataforma
-- [x] Infraestructura profesional implementada
-- [x] Sitio web operativo con datos de ejemplo
-- [x] Sistema de mapas funcional
-
-### Próximas Fases 🔮
-
-- [ ] Integración con datos oficiales municipales
-- [ ] Sistema de validación con IA
-- [ ] Expansión a otras localidades
-- [ ] Módulo de donaciones en línea
-- [ ] App móvil nativa
-- [ ] Dashboard para administradores
+- [ ] Integración automatizada con datos oficiales municipales.
+- [ ] Sistema de validación de comedores mediante IA.
+- [ ] Módulo de donaciones en línea.
+- [ ] App móvil nativa.
 
 ## 🤝 Colaboración y Contacto
 
-¿Tienes ideas para mejorar COCOMAPS? ¡Nos encantaría escucharte!
-
 Tu interés y feedback son valiosos para hacer de COCOMAPS una herramienta más efectiva para la comunidad.
-
-### 📧 Contacto y Soporte
 
 - **Responsable del Proyecto**: Valentín Alderete
 - **Sitio Web**: [GitHub](https://github.com/VexxAl)
