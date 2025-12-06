@@ -4,7 +4,7 @@ import L from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './MapSection.css';
-import mapMarker from './icons/map-marker.png'; // Cambia esto para probar diferentes iconos
+import mapMarker from './icons/map-marker.svg';
 
 // Configure default Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -12,7 +12,6 @@ delete L.Icon.Default.prototype._getIconUrl;
 function MapSection() {
   const [restaurantLocations, setRestaurantLocations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const mapTilerAPIKey = process.env.REACT_APP_MAP_TILER_API_KEY;
   
   const customIcon = new L.Icon({
     iconUrl: mapMarker, // Usamos la variable importada
