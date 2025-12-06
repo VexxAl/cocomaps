@@ -4,15 +4,10 @@ import L from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './MapSection.css';
-import comedorIcon from './icons/Icon6.png'; // Cambia esto para probar diferentes iconos
+import mapMarker from './icons/map-marker.png'; // Cambia esto para probar diferentes iconos
 
 // Configure default Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
-});
 
 function MapSection() {
   const [restaurantLocations, setRestaurantLocations] = useState([]);
@@ -20,11 +15,11 @@ function MapSection() {
   const mapTilerAPIKey = process.env.REACT_APP_MAP_TILER_API_KEY;
   
   const customIcon = new L.Icon({
-    iconUrl: comedorIcon,
-    iconRetinaUrl: comedorIcon,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
+    iconUrl: mapMarker, // Usamos la variable importada
+    iconRetinaUrl: mapMarker,
+    iconSize: [35, 45], // Ajustá este tamaño según cómo se vea tu PNG
+    iconAnchor: [16.5, 45], // El punto que toca el mapa (mitad ancho, alto total)
+    popupAnchor: [0, -45] // Donde sale el popup
   });
 
   // Function to geocode addresses with Nominatim
@@ -86,7 +81,9 @@ function MapSection() {
   if (loading) {
     return (
       <section className="map-section">
-        <div className="loader">Cargando mapa</div>
+        <div className="loader">
+          <span style={{marginRight: "20px", color: "var(--color-fondo)"}}>Cargando mapa</span>
+        </div>
       </section>
     );
   }
@@ -94,7 +91,7 @@ function MapSection() {
   return (
     <section className="map-section" id="mapa">
       <MapContainer
-        style={{ width: '100%', height: '500px' }}
+        style={{ width: '100vw', height: '90vh' }}
         center={[-31.6263478, -60.717238]}
         zoom={12}
         maxBounds={[[-90, -180], [90, 180]]}
@@ -110,13 +107,7 @@ function MapSection() {
         {/* Punto fijo para probar iconos
         <Marker
           position={[-31.630000, -60.720000]}
-          icon={new L.Icon({
-            iconUrl: comedorIcon,
-            iconRetinaUrl: comedorIcon,
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -32]
-          })}
+          icon={customIcon}
         >
           <Popup>
             <h3>Punto de prueba</h3>
@@ -138,14 +129,14 @@ function MapSection() {
               <p>
                 <strong>Teléfono:</strong> {restaurante.telefono}
               </p>
-              <p>
+              {/* <p>
                 <strong>Email:</strong> <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
               </p>
               {restaurante.web && (
                 <a href={restaurante.web} target="_blank" rel="noreferrer">
                   Visitar sitio web
                 </a>
-              )}
+              )} */}
             </Popup>
           </Marker>
         ))}

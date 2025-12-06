@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f4f4f4;
-  padding: 20px 0;
+  background-color: var(--color-texto);
+  padding: 0;
 }
 
 .loader {
@@ -23,7 +23,7 @@
   width: 40px;
   height: 40px;
   border: 5px solid #ccc;
-  border-top-color: #007bff;
+  border-top-color: var(--color-secundario);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

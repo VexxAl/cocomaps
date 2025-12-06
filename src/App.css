@@ -1,21 +1,38 @@
-h1,
-p {
-  font-family: 'Figtree', serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
+:root {
+  /* --- Paleta "Guiso Compartido" --- */
+  
+  /* Color de Texto (Terracota Profundo) */
+  --color-texto: #6E3B3B; 
+  
+  /* Color Primario (Rojo Ladrillo) */
+  --color-primario: #AC3F21; 
+  
+  /* Color de Acento (Naranja Quemado) */
+  --color-acento: #BE6A15;
+  
+  /* Color Secundario (Amarillo Mostaza) */
+  --color-secundario: #F3CF7A;
+
+  /* Color de Fondo (Crema Suave) */
+  --color-fondo: #FFECC0;
+  
+  /* Color de Tarjeta (Blanco Hueso) */
+  --color-tarjeta: #FFF8E7;
 }
 
 body {
   margin: 0;
   font-family: 'Figtree', serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+h1, h2, h3, h4, h5, h6, p, a, li, span {
+  font-family: 'Figtree', serif;
 }
 
 .App {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }

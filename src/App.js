@@ -29,10 +29,12 @@ function App() {
           </>
         } />
         
+        
+
         {/* Ruta Lista: Solo el listado de comedores */}
         <Route path="/comedores" element={
-          <div style={{ marginTop: '20px' }}>
-            <h1 style={{ textAlign: 'center', color: '#232d4f' }}>Listado de Comedores</h1>
+          <div style={{ backgroundColor: 'var(--color-fondo)', padding: '30px', height: '100%'  }}>
+            <h1 style={{ textAlign: 'center', color: 'var(--color-primario)' }}>Listado de Comedores</h1>
             <RestaurantCards />
           </div>
         } />

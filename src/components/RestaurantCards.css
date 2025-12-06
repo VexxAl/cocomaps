@@ -7,27 +7,39 @@
 }
 
 .restaurant-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color: var(--color-tarjeta);
+  border: 1px solid var(--color-texto);
   border-radius: 8px;
   width: 300px;
   padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 0px var(--color-acento);
+  transition: transform 0.2s;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-5px);
 }
 
 .restaurant-card h2 {
   font-size: 1.5em;
-  color: #333;
-  margin-bottom: 10px;
+  color: var(--color-texto);
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--color-acento);
+  padding-bottom: 10px;
+
+  min-height: 4rem;
+  display: flex;
+  align-items: center;
 }
 
 .restaurant-card p {
   margin: 5px 0;
-  color: #555;
+  color: var(--color-texto);
 }
 
 .restaurant-card a {
-  color: #007bff;
+  color: var(--color-acento);
+  font-weight: bold;
   text-decoration: none;
 }
 
@@ -37,14 +49,4 @@
 
 .restaurant-card ul {
   padding-left: 20px;
-}
-
-.distrito-tag {
-  background-color: #e7ba61;
-  color: #232d4f;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.8em;
-  font-weight: bold;
-  margin-left: 5px;
 }
