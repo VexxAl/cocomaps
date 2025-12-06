@@ -6,6 +6,10 @@
   justify-content: center;
 }
 
+.error {
+  min-height: 80vh;
+}
+
 .restaurant-card {
   background-color: var(--color-tarjeta);
   border: 1px solid var(--color-texto);
