@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
+import L, { map } from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './MapSection.css';
@@ -22,8 +22,8 @@ function MapSection() {
   const customIcon = new L.Icon({
     iconUrl: mapMarker, // Usamos la variable importada
     iconRetinaUrl: mapMarker,
-    iconSize: [45, 45], // Ajustá este tamaño según cómo se vea tu PNG
-    iconAnchor: [22.5, 45], // El punto que toca el mapa (mitad ancho, alto total)
+    iconSize: [35, 45], // Ajustá este tamaño según cómo se vea tu PNG
+    iconAnchor: [16.5, 45], // El punto que toca el mapa (mitad ancho, alto total)
     popupAnchor: [0, -45] // Donde sale el popup
   });
 
@@ -110,13 +110,7 @@ function MapSection() {
         {/* Punto fijo para probar iconos
         <Marker
           position={[-31.630000, -60.720000]}
-          icon={new L.Icon({
-            iconUrl: comedorIcon,
-            iconRetinaUrl: comedorIcon,
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -32]
-          })}
+          icon={customIcon}
         >
           <Popup>
             <h3>Punto de prueba</h3>

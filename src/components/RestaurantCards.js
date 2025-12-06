@@ -46,11 +46,14 @@ function RestaurantCards() {
           {restaurante.calle && (
             <p>
               <strong>Dirección:</strong>{' '}
-              {`${restaurante.calle}, ${restaurante.ciudad || ''}`}
-              {/* Mostramos el Distrito si existe */}
-              {restaurante.distrito && (
-                <span className="distrito-tag"> ({restaurante.distrito})</span>
-              )}
+              {`${restaurante.calle}`}
+            </p>
+          )}
+          {/* Mostramos el Distrito si existe */}
+          {restaurante.distrito && (
+            <p> 
+              <strong>Distrito:</strong>{' '}
+              {`${restaurante.distrito}`}
             </p>
           )}
           {restaurante.telefono && (
@@ -58,7 +61,7 @@ function RestaurantCards() {
               <strong>Teléfono:</strong> {restaurante.telefono}
             </p>
           )}
-          {restaurante.email && (
+          {/* {restaurante.email && (
             <p>
               <strong>Email:</strong>{' '}
               <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
@@ -71,7 +74,7 @@ function RestaurantCards() {
                 {restaurante.web}
               </a>
             </p>
-          )}
+          )} */}
           <p>
             <strong>Horario:</strong>
             <ul>
