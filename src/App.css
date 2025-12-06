@@ -1,21 +1,22 @@
 :root {
   /* --- Paleta "Guiso Compartido" --- */
   
-  /* Principal / Identidad (Terracota Profundo) - Reemplaza al Azul Institucional */
+  /* Color de Texto (Terracota Profundo) */
   --color-texto: #6E3B3B; 
   
-  /* Acción / Resaltado - Reemplaza al Dorado */
+  /* Color Primario (Rojo Ladrillo) */
   --color-primario: #AC3F21; 
   
-  /* Secundario - Para detalles */
+  /* Color de Acento (Naranja Quemado) */
   --color-acento: #BE6A15;
   
+  /* Color Secundario (Amarillo Mostaza) */
   --color-secundario: #F3CF7A;
 
-  /* Fondo (Crema Suave) - Reemplaza al Blanco puro */
+  /* Color de Fondo (Crema Suave) */
   --color-fondo: #FFECC0;
   
-  /* Fondo de Tarjetas (Blanco Hueso) */
+  /* Color de Tarjeta (Blanco Hueso) */
   --color-tarjeta: #FFF8E7;
 }
 
