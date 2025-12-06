@@ -5,7 +5,9 @@ import MainContent from './components/MainContent';
 import MapSection from './components/MapSection';
 import Footer from './components/Footer';
 import RestaurantCards from './components/RestaurantCards';
-import SearchBar from './components/SearchBar'; // Importar el nuevo componente
+import SearchBar from './components/SearchBar';
+import ScrollToTop from './components/ScrollToTop';
+
 import './App.css';
 
 function App() {
@@ -40,6 +42,8 @@ function App() {
         } />
       </Routes>
       <Footer />
+      
+      <ScrollToTop />
     </div>
   );
 }
