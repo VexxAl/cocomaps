@@ -1,0 +1,33 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: var(--color-acento); /* Naranja Quemado */
+  color: var(--color-fondo);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: all 0.3s ease-in-out;
+  z-index: 1000; /* Para que flote sobre todo, incluso el mapa */
+}
+
+.scroll-to-top:hover {
+  background-color: var(--color-primario); /* Terracota al pasar el mouse */
+  transform: translateY(-5px);
+}
+
+/* Ajuste para móvil: un poco más chico y pegado al borde */
+@media (max-width: 768px) {
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
