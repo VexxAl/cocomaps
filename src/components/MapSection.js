@@ -91,7 +91,7 @@ function MapSection() {
   return (
     <section className="map-section" id="mapa">
       <MapContainer
-        style={{ width: '100%', height: '90vh' }}
+        style={{ width: '100vw', height: '90vh' }}
         center={[-31.6263478, -60.717238]}
         zoom={12}
         maxBounds={[[-90, -180], [90, 180]]}
