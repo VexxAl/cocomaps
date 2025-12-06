@@ -11,6 +11,11 @@
 .logo-container {
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+.logo-container:hover{
+  transform: scale(1.03);
+  transition: transform 0.3s;
 }
 
 .header-logo {
@@ -27,10 +32,6 @@
   font-weight: 800; /* Más gordita la letra */
   letter-spacing: -0.5px;
 }
-.logo a:hover {
-  transform: scale(1.03);
-  display: flex;
-}
 
 .nav {
   display: flex;
@@ -43,10 +44,11 @@
   color: var(--color-texto);
   font-weight: 800;
 }
-
 .nav a:hover {
   color: var(--color-acento);
   text-decoration: none;
+  transform: scale(1.03);
+  transition: color 0.5s;
 }
 
 .mapa {
@@ -54,12 +56,11 @@
   color: var(--color-texto) !important;
   padding: 8px 16px;
   border-radius: 15%;
-  transition: transform 0.2s;
 }
-
 .mapa:hover {
-  transform: scale(1.05);
   color: var(--color-fondo) !important;
+  transform: scale(1.15) !important;
+  transition: transform 0.5s !important;
   background-color: var(--color-acento);
 }
 

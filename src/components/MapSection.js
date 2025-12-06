@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L, { map } from 'leaflet';
+import L from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import './MapSection.css';
@@ -8,11 +8,6 @@ import mapMarker from './icons/map-marker.png'; // Cambia esto para probar difer
 
 // Configure default Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
-});
 
 function MapSection() {
   const [restaurantLocations, setRestaurantLocations] = useState([]);
@@ -86,7 +81,9 @@ function MapSection() {
   if (loading) {
     return (
       <section className="map-section">
-        <div className="loader">Cargando mapa</div>
+        <div className="loader">
+          <span style={{marginRight: "20px", color: "var(--color-fondo)"}}>Cargando mapa</span>
+        </div>
       </section>
     );
   }
@@ -132,14 +129,14 @@ function MapSection() {
               <p>
                 <strong>Teléfono:</strong> {restaurante.telefono}
               </p>
-              <p>
+              {/* <p>
                 <strong>Email:</strong> <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
               </p>
               {restaurante.web && (
                 <a href={restaurante.web} target="_blank" rel="noreferrer">
                   Visitar sitio web
                 </a>
-              )}
+              )} */}
             </Popup>
           </Marker>
         ))}
