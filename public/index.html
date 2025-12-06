@@ -2,14 +2,51 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;" />
+
+  <meta name="theme-color" content="#6E3B3B" />
+
+  <meta
+    name="description"
+    content="Mapa interactivo de comedores comunitarios en la ciudad de Santa Fe. Conectando vecinos, donantes y comedores."
+  />
+
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.svg" />
+  
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
-    rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+  rel="stylesheet"
   />
+  
+  <title>COCOMAPS | Mapa Solidario Santa Fe</title>
+  
+  <meta 
+    http-equiv="Content-Security-Policy" 
+    content="
+      default-src 'self'; 
+      script-src 'self' 'unsafe-eval' 'unsafe-inline'; 
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+      font-src 'self' https://fonts.gstatic.com; 
+      img-src 'self' data: blob: https://*.basemaps.cartocdn.com https://unpkg.com; 
+      connect-src 'self' https://nominatim.openstreetmap.org;
+    " 
+  />
+  
+  <meta property="og:title" content="COCOMAPS | Mapa Solidario" />
+  <meta property="og:description" content="Encontrá y colaborá con los comedores comunitarios de nuestra ciudad. Una red solidaria al alcance de todos." />
+  <meta property="og:image" content="%PUBLIC_URL%/favicon.svg" />
+  <meta property="og:url" content="https://cocomaps.com" />
+  <meta property="og:type" content="website" />
 </head>
-<body id="root"></body>
+
+<body>
+  <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
+  <div id="root"></div>
+</body>
+
 </html>
