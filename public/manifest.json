@@ -1,7 +1,7 @@
 {
   "short_name": "COCOMAPS",
-  "name": "COCOMAPS Santa Fe - Mapa de Comedores Comunitarios",
-  "description": "Encontrá comedores comunitarios en Santa Fe",
+  "name": "COCOMAPS | Mapa de Comedores Comunitarios",
+  "description": "Encontrá comedores comunitarios en Santa Fe. Una red solidaria al alcance de todos.",
   "icons": [
     {
       "src": "favicon.svg",
@@ -22,15 +22,18 @@
       "purpose": "any maskable"
     },
     {
-      "src": "apple-touch-icon.png",
+      "src": "AppleTouchIcon.png",
       "type": "image/png",
       "sizes": "180x180",
       "purpose": "apple"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "theme_color": "#6E3B3B",
   "background_color": "#FFF8E7",
-  "orientation": "portrait-primary"
+  "orientation": "portrait-primary",
+  "lang": "es-AR",
+  "dir": "ltr"
 }
