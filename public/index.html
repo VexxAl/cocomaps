@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   
-  <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" !important /> 
+  <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml" !important />
+
+  <!-- ✅ FALLBACK para navegadores que no soportan SVG -->
+  <link rel="icon" href="%PUBLIC_URL%/favicon.png" type="image/png" sizes="32x32" />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#6E3B3B" />
   
   <meta
-  name="description"
-  content="Mapa interactivo de comedores comunitarios en la ciudad de Santa Fe. Conectando vecinos, donantes y comedores."
+    name="description"
+    content="Mapa interactivo de comedores comunitarios en la ciudad de Santa Fe. Conectando vecinos, donantes y comedores."
   />
   
+  <!-- ✅ APPLE Touch Icon (para cuando guardan la web en home screen) -->
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/AppleTouchIcon.png" sizes="180x180" />
+
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -39,7 +44,7 @@
   
   <meta property="og:title" content="COCOMAPS | Mapa Solidario" />
   <meta property="og:description" content="Encontrá y colaborá con los comedores comunitarios de nuestra ciudad. Una red solidaria al alcance de todos." />
-  <meta property="og:image" content="%PUBLIC_URL%/og-icon.jpg" />
+  <meta property="og:image" content="%PUBLIC_URL%/og.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://cocomaps.com" />
   <meta property="og:locale" content="es_AR" />
