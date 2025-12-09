@@ -1,6 +1,8 @@
 #buscador {
+    position: relative; /* Necesario para que el z-index funcione */
+    z-index: 9999; /* ¡Por encima de todo, incluso del header o mapa! */
     padding: 20px;
-    background-color: var(--color-secundario); /* Color institucional */
+    background-color: var(--color-secundario);
     display: flex;
     justify-content: center;
 }
@@ -13,4 +15,41 @@
     border: none;
     outline: none;
     font-size: 1rem;
+}
+
+/* Nuevo contenedor para posicionar el dropdown relativo al input */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Estilos del Desplegable */
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 10%;
+    right: 8%;
+    z-index: 1000; /* Siempre por encima */
+    background-color: var(--color-fondo); /* Crema Suave */
+    border: 1px solid var(--color-primario);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    color: var(--color-texto);
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: var(--color-tarjeta);
 }
