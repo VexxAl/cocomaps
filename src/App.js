@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'; // Importar useEffect
-import { Routes, Route, useLocation } from 'react-router-dom'; // Importar useLocation
+import React, { useEffect, useState, useCallback } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import MapSection from './components/MapSection';
@@ -12,28 +12,73 @@ import './App.css';
 
 function App() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  // ESTADOS GLOBALES
+  const [searchTerm, setSearchTerm] = useState(''); 
+  const [zoomToLocation, setZoomToLocation] = useState(null); 
+  const [filteredComedores, setFilteredComedores] = useState([]); // Resultados filtrados
 
   // Cada vez que cambia la ruta, subimos arriba de todo
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+  
+  // Función de búsqueda (usamos useCallback para optimizar con el Debounce)
+  const handleSearch = useCallback((term) => {
+    setSearchTerm(term);
+  }, []);
+
+  // Función para hacer zoom en un marcador (usada al clickear en el dropdown)
+  const handleZoomToMarker = useCallback((restaurant) => {
+    
+    let coords = restaurant.coordinates || restaurant;
+    let id = restaurant.id;
+
+    setZoomToLocation({ 
+      lat: coords.lat, 
+      lng: coords.lng, 
+      id: id,
+      zoom: 16,
+    });
+    
+    // Si no estamos en la página principal, navegamos a ella antes de hacer zoom
+    if (pathname !== '/') {
+        navigate('/');
+    }
+  }, [navigate, pathname]);
+
+  const handleResetView = useCallback(() => {
+    setZoomToLocation(null);
+  }, []);
 
   return (
     <div className="App">
       <Header />
       <Routes>
-        {/* Ruta Home: Landing + Mapa + Buscador */}
         <Route path="/" element={
           <>
             <MainContent />
-            <SearchBar onSearch={(val) => console.log("Buscando:", val)} /> 
-            <MapSection />
+            {/* 1. Pasamos los resultados filtrados al SearchBar */}
+            {/* 2. Pasamos handleZoomToMarker como onSelect para que el dropdown haga zoom */}
+            <SearchBar 
+                onSearch={handleSearch} 
+                filteredResults={filteredComedores}
+                onSelect={handleZoomToMarker}
+            /> 
+            {/* 1. Pasamos la función para que el MapSection devuelva los resultados */}
+            {/* 2. El MapSection sigue recibiendo el zoom para mover el mapa */}
+            <MapSection 
+                searchTerm={searchTerm} 
+                zoomToLocation={zoomToLocation} 
+                handleZoomToMarker={handleZoomToMarker} 
+                setFilteredComedores={setFilteredComedores}
+                onPopupClose={handleResetView}
+            /> 
           </>
         } />
         
-        
-
-        {/* Ruta Lista: Solo el listado de comedores */}
+        {/* ... (ruta /comedores se mantiene) */}
         <Route path="/comedores" element={
           <div style={{ backgroundColor: 'var(--color-fondo)', padding: '30px', height: '100%'  }}>
             <h1 style={{ textAlign: 'center', color: 'var(--color-primario)' }}>Listado de Comedores</h1>

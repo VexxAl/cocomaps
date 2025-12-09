@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap} from 'react-leaflet';
+import React, { useEffect, useState, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
@@ -9,55 +9,70 @@ import mapMarker from './icons/map-marker.svg';
 // Configure default Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
 
+// COMPONENTE AUXILIAR 1: Maneja la lógica de Scroll-Trap
 function ZoomHandler() {
   const map = useMap();
 
   useEffect(() => {
-    // 1. Deshabilitamos el zoom con rueda al inicio (para que no atrape el scroll)
     map.scrollWheelZoom.disable();
-
-    // 2. Escuchamos cuando el usuario APRIETA una tecla
     const handleKeyDown = (e) => {
-      // Habilitamos si es Shift (tu pedido) o Control/Meta (estándar de mapas)
       if (e.key === 'Shift' || e.key === 'Control' || e.key === 'Meta') {
         map.scrollWheelZoom.enable();
       }
     };
-
-    // 3. Escuchamos cuando el usuario SUELTA la tecla
     const handleKeyUp = (e) => {
       if (e.key === 'Shift' || e.key === 'Control' || e.key === 'Meta') {
         map.scrollWheelZoom.disable();
       }
     };
-
-    // Agregamos los "oídos" a la ventana
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
-
-    // Limpieza (cuando el componente se desmonta)
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, [map]);
 
-  return null; // Este componente no renderiza nada visual
+  return null;
 }
 
-function MapSection() {
+// COMPONENTE AUXILIAR 2: Maneja el cambio dinámico de vista (para hacer ZOOM al click)
+function ChangeView({ center, zoom }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (center && zoom) {
+      map.setView(center, zoom, {
+        animate: true,
+        duration: 1.5
+      });
+    }
+  }, [center, zoom, map]);
+
+  return null; 
+}
+
+
+// COMPONENTE PRINCIPAL
+function MapSection({searchTerm, zoomToLocation, handleZoomToMarker, setFilteredComedores, onPopupClose }) {
+  // ESTADOS
   const [restaurantLocations, setRestaurantLocations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState(null);
   
+  // REFERENCIAS
+  const markerRefs = useRef({});
+
+  // ICONO PERSONALIZADO
   const customIcon = new L.Icon({
-    iconUrl: mapMarker, // Usamos la variable importada
+    iconUrl: mapMarker, 
     iconRetinaUrl: mapMarker,
-    iconSize: [35, 45], // Ajustá este tamaño según cómo se vea tu PNG
-    iconAnchor: [16.5, 45], // El punto que toca el mapa (mitad ancho, alto total)
-    popupAnchor: [0, -45] // Donde sale el popup
+    iconSize: [35, 45], 
+    iconAnchor: [16.5, 45], 
+    popupAnchor: [0, -45] 
   });
 
-  // Function to geocode addresses with Nominatim
+  // FUNCIÓN AUXILIAR: Geocodifica una dirección usando Nominatim
   const geocodeAddress = async (address) => {
     const formattedAddress = `${address}, Santa Fe, Argentina`;
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
@@ -82,18 +97,30 @@ function MapSection() {
     }
   };
   
+  // EFECTO 1: Cargar y filtrar locaciones
   useEffect(() => {
     const fetchLocations = async () => {
+      // setLoading(true);
+      setApiError(null); // Limpiar errores al iniciar una nueva búsqueda
+      
+      const url = searchTerm 
+        ? `${process.env.REACT_APP_BACKEND_URL}?search=${encodeURIComponent(searchTerm)}`
+        : process.env.REACT_APP_BACKEND_URL;
+
       try {
-        const response = await axios.get(process.env.REACT_APP_BACKEND_URL);
+        const response = await axios.get(url);
+        const rawLocations = response.data; // Datos crudos recibidos
+        
+        // Procesar coordenadas
         const locations = await Promise.all(
-          response.data.map(async (restaurante) => {
+          rawLocations.map(async (restaurante) => {
             if (restaurante.coordenadas) {
               return { ...restaurante, coordinates: restaurante.coordenadas };
             } else {
               const fullAddress = `${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`;
               const coordinates = await geocodeAddress(fullAddress);
               if (coordinates) {
+                // Guardar coordenadas en el backend
                 await axios.post(process.env.REACT_APP_BACKEND_URL + `/${restaurante.id}/update-coordinates`, { coordinates });
                 return { ...restaurante, coordinates };
               } else {
@@ -102,17 +129,43 @@ function MapSection() {
             }
           })
         );
-        setRestaurantLocations(locations.filter((loc) => loc !== null));
+
+        const finalLocations = locations.filter((loc) => loc !== null);
+
+        // Devolver resultados filtrados al componente padre
+        if (setFilteredComedores) {
+          setFilteredComedores(finalLocations);
+        }
+
+        setRestaurantLocations(finalLocations);
         setLoading(false);
+
       } catch (error) {
+        // CAPTURA DE ERROR DE CONEXIÓN
         console.error("Error al obtener los comedores:", error);
+        setApiError("Error al conectar con la API del servidor.");
+        setRestaurantLocations([]); // Asegurar lista vacía
+        if (setFilteredComedores) {
+          setFilteredComedores([]);
+        }
         setLoading(false);
       }
     };
 
     fetchLocations();
-  }, []);
+  }, [searchTerm, setFilteredComedores]);
+  
+  // EFECTO 2: Abrir Popup si hay un ID en zoomToLocation
+  useEffect(() => {
+    if (zoomToLocation && zoomToLocation.id) {
+      const marker = markerRefs.current[zoomToLocation.id];
+      if (marker) {
+        marker.openPopup();
+      }
+    }
+  }, [zoomToLocation]);
 
+  // RENDERIZADO: Loading
   if (loading) {
     return (
       <section className="map-section">
@@ -123,20 +176,44 @@ function MapSection() {
     );
   }
 
+  // RENDERIZADO: Error de API
+  if (apiError) {
+    return (
+      <section className="map-section" style={{height: '90vh'}}>
+        <div className="loader" style={{flexDirection: 'column'}}>
+          <span style={{color: 'var(--color-primario)', marginBottom: '20px', fontSize: '1.8rem'}}>
+            Error de Conexión
+          </span>
+          <p style={{color: 'var(--color-texto)', maxWidth: '600px', textAlign: 'center'}}>
+            {apiError}
+          </p>
+        </div>
+      </section>
+    );
+  }
+  
+  // RENDERIZADO NORMAL DEL MAPA
+  const currentCenter = zoomToLocation 
+    ? [zoomToLocation.lat, zoomToLocation.lng] 
+    : [-31.6263478, -60.717238]; 
+    
+  const currentZoom = zoomToLocation 
+    ? zoomToLocation.zoom 
+    : 12;
+
   return (
     <section className="map-section" id="mapa">
       <MapContainer
         style={{ width: '100vw', height: '90vh' }}
-        center={[-31.6263478, -60.717238]}
-        zoom={12}
+        center={currentCenter}
+        zoom={currentZoom}
         maxBounds={[[-90, -180], [90, 180]]}
         maxBoundsViscosity={1.0}
         scrollWheelZoom={false}
       >
-
         <ZoomHandler />
+        <ChangeView center={currentCenter} zoom={currentZoom} />
        
-
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -144,39 +221,30 @@ function MapSection() {
           maxZoom={20}
         />
 
-            {/* Punto fijo para probar iconos
-            <Marker
-              position={[-31.630000, -60.720000]}
-              icon={customIcon}
-            >
-              <Popup>
-            <h3>Punto de prueba</h3>
-            <p>Este es un punto fijo para hacer diferentes pruebas</p>
-              </Popup>
-            </Marker> */}
-
         {restaurantLocations.map((restaurante, index) => (
           <Marker
-            key={index}
+            key={restaurante.id || index}
             position={restaurante.coordinates}
             icon={customIcon}
+            ref={(el) => (markerRefs.current[restaurante.id] = el)}
+            eventHandlers={{
+              click: () => handleZoomToMarker(restaurante),
+              // Detectamos cuando se cierra el popup
+              popupclose: () => {
+                if (zoomToLocation && onPopupClose) {
+                  onPopupClose();
+                }
+              }
+            }}
           >
-            <Popup>
+            <Popup className='custom-popup'>
               <h3>{restaurante.nombre}</h3>
               <p>
-                <strong>Dirección:</strong> {`${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`}
+                <strong>Dirección:</strong> {`${restaurante.calle}, ${restaurante.ciudad}`}
               </p>
               <p>
                 <strong>Teléfono:</strong> {restaurante.telefono}
               </p>
-              {/* <p>
-                <strong>Email:</strong> <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
-              </p>
-              {restaurante.web && (
-                <a href={restaurante.web} target="_blank" rel="noreferrer">
-                  Visitar sitio web
-                </a>
-              )} */}
             </Popup>
           </Marker>
         ))}
