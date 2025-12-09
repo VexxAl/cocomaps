@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap} from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
@@ -9,55 +9,64 @@ import mapMarker from './icons/map-marker.svg';
 // Configure default Leaflet icon
 delete L.Icon.Default.prototype._getIconUrl;
 
+// COMPONENTE AUXILIAR 1: Maneja la lógica de Scroll-Trap (se mantiene)
 function ZoomHandler() {
   const map = useMap();
 
   useEffect(() => {
-    // 1. Deshabilitamos el zoom con rueda al inicio (para que no atrape el scroll)
     map.scrollWheelZoom.disable();
-
-    // 2. Escuchamos cuando el usuario APRIETA una tecla
     const handleKeyDown = (e) => {
-      // Habilitamos si es Shift (tu pedido) o Control/Meta (estándar de mapas)
       if (e.key === 'Shift' || e.key === 'Control' || e.key === 'Meta') {
         map.scrollWheelZoom.enable();
       }
     };
-
-    // 3. Escuchamos cuando el usuario SUELTA la tecla
     const handleKeyUp = (e) => {
       if (e.key === 'Shift' || e.key === 'Control' || e.key === 'Meta') {
         map.scrollWheelZoom.disable();
       }
     };
-
-    // Agregamos los "oídos" a la ventana
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
-
-    // Limpieza (cuando el componente se desmonta)
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, [map]);
 
-  return null; // Este componente no renderiza nada visual
+  return null;
 }
 
-function MapSection() {
+// COMPONENTE AUXILIAR 2: Maneja el cambio dinámico de vista (para hacer ZOOM al click)
+function ChangeView({ center, zoom }) {
+  const map = useMap();
+  
+  useEffect(() => {
+    if (center && zoom) {
+      map.setView(center, zoom, {
+        animate: true,
+        duration: 1.5
+      });
+    }
+  }, [center, zoom, map]);
+
+  return null; 
+}
+
+
+// COMPONENTE PRINCIPAL
+function MapSection({ searchTerm, zoomToLocation, handleZoomToMarker, setFilteredComedores }) {
   const [restaurantLocations, setRestaurantLocations] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [apiError, setApiError] = useState(null);
+
   const customIcon = new L.Icon({
-    iconUrl: mapMarker, // Usamos la variable importada
+    iconUrl: mapMarker, 
     iconRetinaUrl: mapMarker,
-    iconSize: [35, 45], // Ajustá este tamaño según cómo se vea tu PNG
-    iconAnchor: [16.5, 45], // El punto que toca el mapa (mitad ancho, alto total)
-    popupAnchor: [0, -45] // Donde sale el popup
+    iconSize: [35, 45], 
+    iconAnchor: [16.5, 45], 
+    popupAnchor: [0, -45] 
   });
 
-  // Function to geocode addresses with Nominatim
   const geocodeAddress = async (address) => {
     const formattedAddress = `${address}, Santa Fe, Argentina`;
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
@@ -82,10 +91,21 @@ function MapSection() {
     }
   };
   
+  // EFECTO: Se ejecuta cada vez que cambia el searchTerm
   useEffect(() => {
     const fetchLocations = async () => {
+      // setLoading(true);
+      setApiError(null); // Limpiar errores al iniciar una nueva búsqueda
+      
+      const url = searchTerm 
+        ? `${process.env.REACT_APP_BACKEND_URL}?search=${encodeURIComponent(searchTerm)}`
+        : process.env.REACT_APP_BACKEND_URL;
+
       try {
-        const response = await axios.get(process.env.REACT_APP_BACKEND_URL);
+        const response = await axios.get(url);
+        
+        const rawLocations = response.data; // Datos crudos recibidos
+
         const locations = await Promise.all(
           response.data.map(async (restaurante) => {
             if (restaurante.coordenadas) {
@@ -102,17 +122,31 @@ function MapSection() {
             }
           })
         );
-        setRestaurantLocations(locations.filter((loc) => loc !== null));
+
+        const finalLocations = locations.filter((loc) => loc !== null);
+
+        if (setFilteredComedores) {
+          setFilteredComedores(finalLocations);
+        }
+
+        setRestaurantLocations(finalLocations);
         setLoading(false);
       } catch (error) {
+        // CAPTURA DE ERROR DE CONEXIÓN
         console.error("Error al obtener los comedores:", error);
+        setApiError("Error al conectar con la API del servidor.");
+        setRestaurantLocations([]); // Asegurar lista vacía
+        if (setFilteredComedores) {
+          setFilteredComedores([]);
+        }
         setLoading(false);
       }
     };
 
     fetchLocations();
-  }, []);
+  }, [searchTerm, setFilteredComedores]); 
 
+  // LÓGICA DE RENDERIZADO DE FEEDBACK (Solo Loading)
   if (loading) {
     return (
       <section className="map-section">
@@ -122,21 +156,29 @@ function MapSection() {
       </section>
     );
   }
+  
+  // RENDERIZADO NORMAL DEL MAPA
+  const currentCenter = zoomToLocation 
+    ? [zoomToLocation.lat, zoomToLocation.lng] 
+    : [-31.6263478, -60.717238]; 
+    
+  const currentZoom = zoomToLocation 
+    ? zoomToLocation.zoom 
+    : 12;
 
   return (
     <section className="map-section" id="mapa">
       <MapContainer
         style={{ width: '100vw', height: '90vh' }}
-        center={[-31.6263478, -60.717238]}
-        zoom={12}
+        center={currentCenter}
+        zoom={currentZoom}
         maxBounds={[[-90, -180], [90, 180]]}
         maxBoundsViscosity={1.0}
         scrollWheelZoom={false}
       >
-
         <ZoomHandler />
+        {zoomToLocation && <ChangeView center={currentCenter} zoom={currentZoom} />}
        
-
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -144,24 +186,16 @@ function MapSection() {
           maxZoom={20}
         />
 
-            {/* Punto fijo para probar iconos
-            <Marker
-              position={[-31.630000, -60.720000]}
-              icon={customIcon}
-            >
-              <Popup>
-            <h3>Punto de prueba</h3>
-            <p>Este es un punto fijo para hacer diferentes pruebas</p>
-              </Popup>
-            </Marker> */}
-
         {restaurantLocations.map((restaurante, index) => (
           <Marker
             key={index}
             position={restaurante.coordinates}
             icon={customIcon}
+            eventHandlers={{
+              click: () => handleZoomToMarker(restaurante.coordinates),
+            }}
           >
-            <Popup>
+            <Popup className='custom-popup'>
               <h3>{restaurante.nombre}</h3>
               <p>
                 <strong>Dirección:</strong> {`${restaurante.calle}, ${restaurante.ciudad}, ${restaurante.provincia} (${restaurante.codigo_postal})`}
@@ -169,14 +203,6 @@ function MapSection() {
               <p>
                 <strong>Teléfono:</strong> {restaurante.telefono}
               </p>
-              {/* <p>
-                <strong>Email:</strong> <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
-              </p>
-              {restaurante.web && (
-                <a href={restaurante.web} target="_blank" rel="noreferrer">
-                  Visitar sitio web
-                </a>
-              )} */}
             </Popup>
           </Marker>
         ))}
