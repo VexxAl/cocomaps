@@ -13,6 +13,8 @@ import './App.css';
 function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  // ESTADOS GLOBALES
   const [searchTerm, setSearchTerm] = useState(''); 
   const [zoomToLocation, setZoomToLocation] = useState(null); 
   const [filteredComedores, setFilteredComedores] = useState([]); // Resultados filtrados
@@ -28,15 +30,27 @@ function App() {
   }, []);
 
   // Función para hacer zoom en un marcador (usada al clickear en el dropdown)
-  const handleZoomToMarker = useCallback((coordinates) => {
-    setZoomToLocation({ lat: coordinates.lat, lng: coordinates.lng, zoom: 15 });
+  const handleZoomToMarker = useCallback((restaurant) => {
+    
+    let coords = restaurant.coordinates || restaurant;
+    let id = restaurant.id;
+
+    setZoomToLocation({ 
+      lat: coords.lat, 
+      lng: coords.lng, 
+      id: id,
+      zoom: 16,
+    });
     
     // Si no estamos en la página principal, navegamos a ella antes de hacer zoom
-    if (location.pathname !== '/') {
+    if (pathname !== '/') {
         navigate('/');
     }
-  }, [navigate, location.pathname]);
+  }, [navigate, pathname]);
 
+  const handleResetView = useCallback(() => {
+    setZoomToLocation(null);
+  }, []);
 
   return (
     <div className="App">
@@ -58,7 +72,8 @@ function App() {
                 searchTerm={searchTerm} 
                 zoomToLocation={zoomToLocation} 
                 handleZoomToMarker={handleZoomToMarker} 
-                setFilteredComedores={setFilteredComedores} // <-- NUEVO PROP
+                setFilteredComedores={setFilteredComedores}
+                onPopupClose={handleResetView}
             /> 
           </>
         } />

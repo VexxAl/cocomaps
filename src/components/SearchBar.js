@@ -39,8 +39,11 @@ function SearchBar({ onSearch, filteredResults, onSelect }) {
   };
   
   const handleSelect = (result) => {
-    setInputValue(result.nombre); // Seteamos el nombre del comedor en el input
-    onSelect(result.coordenadas); // Disparamos el zoom
+    setInputValue(''); // Limpiamos el input
+    onSearch(''); // Limpiamos los resultados
+    onSelect(result)
+    // setInputValue(result.nombre); // Seteamos el nombre del comedor en el input
+    // onSelect(result.coordenadas); // Disparamos el zoom
   };
 
   // LOGICA DE FILTRADO LOCAL
