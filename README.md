@@ -3,7 +3,7 @@
 ## Mapa de Comedores Comunitarios de la Ciudad de Santa Fe
 
 [![Sitio Web](https://img.shields.io/badge/Sitio%20Web-cocomaps.com-C86B28?style=flat-square)](https://cocomaps.com)
-[![Estado](https://img.shields.io/badge/Estado-Operativo-6A994E?style=flat-square)]()
+[![Estado](https://img.shields.io/badge/Estado-Producción-6A994E?style=flat-square)]()
 [![Programa](https://img.shields.io/badge/Programa-Eureka%202024-AC3F21?style=flat-square)](https://www.santafe.gob.ar/index.php/web/content/view/full/252187/(subtema)/251443)
 
 > **"Donde la necesidad encuentra a la solidaridad"**
@@ -11,32 +11,33 @@
 
 ---
 
-## 🎨 Nueva Identidad Visual (v2.0)
+## 🎨 Identidad Visual (v2.0)
 
-En nuestra última actualización, **COCOMAPS** evolucionó su diseño para reflejar mejor su misión. Dejamos atrás la estética institucional para abrazar una identidad **cálida, humana y cercana**.
+**COCOMAPS** posee una identidad **cálida, humana y cercana**, diseñada para reflejar la materialidad de la ayuda social.
 
-* **Paleta "Guiso de Lentejas":** Utilizamos tonos tierra, terracota y crema (`#6E3B3B`, `#AC3F21`, `#FFF8E7`) que evocan el hogar, el alimento caliente y la materialidad de la construcción comunitaria.
-* **Simbología:** El nuevo isotipo fusiona la estructura de una casa (refugio) con una cuchara (alimento), simbolizando que en estos espacios la comunidad encuentra ambas cosas.
-* **UX Centrada en el Humano:** Mejoras de accesibilidad, contrastes altos para lectura fácil y navegación intuitiva en mapas.
+* **Paleta "Guiso de Lentejas":** Tonos tierra, terracota y crema (`#6E3B3B`, `#AC3F21`, `#FFF8E7`) que evocan el hogar y el alimento caliente.
+* **Simbología:** Isotipo que fusiona la estructura de una casa (refugio) con una cuchara (alimento).
+* **UX Centrada en el Humano:** Contrastes altos, navegación intuitiva y feedback visual claro.
 
 ---
 
 ## 🎯 Descripción del Proyecto
 
-**COCOMAPS** centraliza la información de comedores comunitarios en un espacio digital accesible. La plataforma permite visualizar ubicación, horarios, responsables y necesidades específicas, facilitando la conexión entre:
-
-* **Comedores** que necesitan visibilidad.
-* **Donantes y Voluntarios** que quieren ayudar.
-* **Vecinos** que requieren asistencia alimentaria.
+**COCOMAPS** centraliza la información de comedores comunitarios en un espacio digital accesible. La plataforma permite visualizar ubicación, horarios, responsables y necesidades específicas, facilitando la conexión entre comedores, donantes y vecinos.
 
 ### 🌟 Características Principales
 
-* **🗺️ Mapa Interactivo**: Visualización georreferenciada con marcadores personalizados e intuitivos.
-* **✨ UX Avanzada**: Navegación fluida con "Scroll-to-Top", manejo inteligente de zoom en mapas (Shift+Scroll) y diseño amigable.
-* **📱 Diseño Responsive**: Optimizado para cualquier dispositivo, con soporte para PWA (Iconos adaptativos y Manifest).
-* **🔍 Buscador Inteligente**: Filtros por nombre y dirección.
-* **🚀 Infraestructura Robusta**: VPS dedicado, Nginx Reverse Proxy, y Base de Datos PostgreSQL.
-* **🔐 Seguridad**: Certificados SSL, Headers de seguridad (CSP) y protección de endpoints.
+* **🗺️ Mapa Interactivo**: Georreferenciación precisa con marcadores personalizados.
+* **🔍 Buscador Inteligente**:
+  * Filtrado instantáneo por nombre o calle.
+  * Autocompletado y sugerencias en tiempo real.
+  * Zoom automático al seleccionar un resultado.
+* **✨ UX Avanzada**:
+  * *Popups* automáticos al buscar.
+  * Reset de vista inteligente al cerrar información.
+  * Navegación fluida con "Scroll-to-Top".
+* **📱 Diseño Responsive**: Optimizado para móviles y escritorio (PWA ready).
+* **🚀 Infraestructura Robusta**: VPS dedicado, Nginx Reverse Proxy, PostgreSQL y SSL/TLS (HTTPS).
 
 ---
 
@@ -47,16 +48,14 @@ En nuestra última actualización, **COCOMAPS** evolucionó su diseño para refl
 * **Core**: React 19 (SPA)
 * **Mapas**: React Leaflet + MapTiler / OpenStreetMap
 * **Estilos**: CSS Modules con Variables Globales (Design System)
-* **Diseño Gráfico**: Affinity Designer (Vectores SVG optimizados)
 
 ### Backend & Infraestructura
 
-* **Servidor**: VPS KVM2 (Ubuntu)
+* **Servidor**: VPS KVM2 (Ubuntu 24.04)
 * **API**: Node.js + Express
-* **Process Manager**: PM2 (Cluster Mode)
+* **Base de Datos**: PostgreSQL 16 (PostGIS ready)
 * **Web Server**: Nginx (Reverse Proxy + Static Serving)
-* **Base de Datos**: PostgreSQL 16
-* **Deploy**: Pipeline manual optimizado con Git Hooks (Futuro: CI/CD)
+* **Process Manager**: PM2
 
 ---
 
@@ -65,37 +64,34 @@ En nuestra última actualización, **COCOMAPS** evolucionó su diseño para refl
 ### ✅ Fase 1: Cimientos y Despliegue (Completado)
 
 * [x] Arquitectura base (Frontend + Backend + DB).
-* [x] Despliegue en VPS y configuración de dominio.
-* [x] Configuración de SSL y Seguridad básica.
-* [x] Carga de datos iniciales (Mock data para pruebas).
+* [x] Configuración de VPS, Nginx y Dominio (`cocomaps.com`).
+* [x] Implementación de SSL (HTTPS) con Let's Encrypt.
 
-### ✅ Fase 2: Identidad y Experiencia (Completado - Actual)
+### ✅ Fase 2: Identidad y Experiencia (Completado)
 
-* [x] **Rebranding Total:** Nuevo logo, paleta de colores y favicon adaptativo (Dark/Light mode).
-* [x] **Mejoras UX:** Fix de "Scroll Trap" en mapas, botón de retorno, feedback visual en tarjetas.
-* [x] **SEO Técnico:** Open Graph tags para redes sociales, Manifest.json, Meta descriptions.
-* [x] **Optimización:** Refactorización de assets a SVG y limpieza de código.
+* [x] **Rebranding:** Nueva identidad visual, logos y paleta de colores.
+* [x] **Buscador Funcional:** Implementación de barra de búsqueda con *debounce* y dropdown de resultados.
+* [x] **Interacción de Mapa:** Zoom dinámico, manejo de z-index y popups automáticos.
+* [x] **SEO Técnico:** Open Graph tags, Manifest.json y meta descriptions.
 
-### 🚧 Fase 3: Gestión y Autonomía (Próximo Sprint)
+### 🚧 Fase 3: Gestión de Datos y Autonomía (EN PROGRESO)
 
-El foco ahora es permitir que la comunidad gestione sus propios datos de forma segura.
+El foco actual es poblar la base de datos con información real y permitir la gestión autónoma.
 
-* [ ] **Autenticación:** Implementación de Login para administradores (JWT).
-* [ ] **Panel de Administración (Backoffice):** Interfaz ABM (Alta, Baja, Modificación) para gestionar comedores sin tocar código.
-* [ ] **Automatización:** Backups automáticos de base de datos (Cronjobs) hacia almacenamiento externo.
-* [ ] **Seguridad Avanzada:** Rate Limiting en API y Hardening de Nginx.
+* [ ] **Migración de Datos Masiva:** Procesamiento del padrón oficial (PDF) e inserción en base de datos PostgreSQL.
+* [ ] **Panel de Administración (Backoffice):** Desarrollo de interfaz segura para dar de alta/baja/modificar comedores sin código.
+* [ ] **Autenticación:** Sistema de Login (JWT) para administradores y colaboradores.
+* [ ] **Seguridad Avanzada:** Rate Limiting en API y backups automáticos de BD.
 
 ### 🔮 Fase 4: Expansión (Futuro)
 
-* [ ] Integración con datos oficiales municipales en tiempo real.
-* [ ] Sistema de validación de comedores mediante IA (Reconocimiento de fachadas).
-* [ ] Módulo de donaciones directas.
+* [ ] Integración con APIs oficiales municipales (Datos Abiertos).
+* [ ] Sistema de validación de identidad para comedores (IA/Reconocimiento).
+* [ ] Módulo de donaciones directas y sistema de voluntariado.
 
 ---
 
 ## 🤝 Colaboración y Contacto
-
-Tu interés y feedback son valiosos para hacer de COCOMAPS una herramienta más efectiva para la comunidad.
 
 * **Responsable del Proyecto**: Valentín Alderete
 * **Repositorio**: [GitHub](https://github.com/VexxAl/cocomaps)
@@ -106,6 +102,6 @@ Tu interés y feedback son valiosos para hacer de COCOMAPS una herramienta más 
 
 ## 🏆 Reconocimientos
 
-Este proyecto fue desarrollado en el marco del **Programa Eureka - Convocatoria 2024**, con el apoyo y financiamiento que hizo posible crear una herramienta profesional al servicio de la comunidad santafesina.
+Proyecto desarrollado en el marco del **Programa Eureka - Convocatoria 2024**.
 
 **COCOMAPS** - *Fortaleciendo la red de solidaridad comunitaria.*
