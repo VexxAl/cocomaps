@@ -49,8 +49,8 @@
       script-src 'self' 'unsafe-eval' 'unsafe-inline'; 
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
       font-src 'self' https://fonts.gstatic.com; 
-      img-src 'self' data: blob: https://*.basemaps.cartocdn.com https://unpkg.com; 
-      connect-src 'self' https://nominatim.openstreetmap.org http://localhost:5000/; 
+      img-src 'self' data: blob: https://*.basemaps.cartocdn.com https://unpkg.com;
+      connect-src 'self' https://nominatim.openstreetmap.org https://cocomaps.com http://localhost:5000/; 
       frame-src 'self';
     " 
   />
@@ -77,6 +77,27 @@
   <meta name="geo.placename" content="Santa Fe" />
   <meta name="geo.position" content="-31.6263;-60.7172" />
   <meta name="ICBM" content="-31.6263, -60.7172" />
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NGO",
+      "name": "COCOMAPS",
+      "url": "https://cocomaps.com",
+      "logo": "https://cocomaps.com/favicon.svg",
+      "description": "Mapa interactivo de comedores comunitarios en Santa Fe. Conectando necesidad con solidaridad.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Santa Fe",
+        "addressRegion": "Santa Fe",
+        "addressCountry": "AR"
+      },
+      "sameAs": [
+        "https://github.com/VexxAl/cocomaps"
+      ]
+    }
+  </script>
 </head>
 
 <body>
