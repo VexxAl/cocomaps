@@ -23,7 +23,7 @@ CREATE TABLE "locaciones"."provincias" (
 );
 
 CREATE TABLE "locaciones"."localidades" (
-  "cp" SERIAL PRIMARY KEY,
+  "cp" INTEGER PRIMARY KEY,
   "nombre" varchar NOT NULL,
   "provincia_id" int
 );
@@ -53,7 +53,7 @@ CREATE TABLE "comedores"."organizaciones" (
 );
 
 CREATE TABLE "comedores"."encargados" (
-  "dni" SERIAL PRIMARY KEY,
+  "dni" INTEGER PRIMARY KEY,
   "nombre" varchar NOT NULL,
   "apellido" varchar NOT NULL,
   "telefono" varchar NOT NULL,
