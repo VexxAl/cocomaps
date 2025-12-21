@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const { Pool } = require('pg');
 const csv = require('csv-parser');
 
@@ -18,50 +19,78 @@ async function importar() {
     await client.query('BEGIN');
     console.log("Iniciando Importación...");
 
-    // 1. Crear Provincia y Localidad (Santa Fe - CP 3000)
+    // 1. Provincia y Localidad (Santa Fe - CP 3000)
+    // Usamos ON CONFLICT DO NOTHING para no romper si corrés el script dos veces
     const provRes = await client.query(`
-        INSERT INTO locaciones.provincias (nombre) VALUES ('Santa Fe') RETURNING id
+        INSERT INTO locaciones.provincias (nombre) VALUES ('Santa Fe') 
+        ON CONFLICT (id) DO NOTHING 
+        RETURNING id
     `);
-    const provId = provRes.rows[0].id;
+    // Si ya existe, asumimos ID 1 (o buscamos el ID, pero simplificamos para el ejemplo)
+    const provId = provRes.rows.length > 0 ? provRes.rows[0].id : 1; 
 
-    // AHORA INSERTAMOS EL CP MANUALMENTE (3000)
+    // Insertar Localidad 3000
     await client.query(`
         INSERT INTO locaciones.localidades (cp, nombre, provincia_id) 
         VALUES (3000, 'Santa Fe Capital', $1)
+        ON CONFLICT (cp) DO NOTHING
     `, [provId]);
     
-    const localidadId = 3000; // Lo guardamos en variable para usarlo abajo
+    const localidadId = 3000;
 
-    // 2. Crear Encargado Genérico (DNI Ficticio)
-    // Usamos 11111111 como DNI dummy
+    // 2. Encargado Genérico
     const dniGenerico = 11111111;
     await client.query(`
         INSERT INTO comedores.encargados (dni, nombre, apellido, telefono, email)
         VALUES ($1, 'Encargado', 'Generico', '000-0000', 'encargado@generico.com')
+        ON CONFLICT (dni) DO NOTHING
     `, [dniGenerico]);
 
-    // Regex para separar calle y altura
     const direccionRegex = /^([\w\s.ñÑáéíóúÁÉÍÓÚ]+)\s+(\d+)$/;
+    // IDs reservados para carga manual (QA)
     const idsReservados = ['1', '2', '3']; 
 
     const results = [];
     const organizacionesMap = new Map();
+    // Mapa para detectar direcciones duplicadas en esta misma ejecución
+    const direccionesVistas = new Set(); 
 
-    fs.createReadStream('../cocomaps/data/listado_comedores.csv')
+    // Ruta al archivo CSV: ../../data/listado_comedores.csv relativo a este script (server/routes)
+    const csvPathFinal = path.join(__dirname, '../../data/listado_comedores.csv');
+
+    fs.createReadStream(csvPathFinal)
       .pipe(csv())
       .on('data', (data) => results.push(data))
       .on('end', async () => {
         
+        let importados = 0;
+        let ignorados = 0;
+        let duplicados = 0;
+
         for (const row of results) {
           if (idsReservados.includes(row.No)) continue;
 
           const rawAddress = row.DIRECCIÓN ? row.DIRECCIÓN.trim() : '';
+          
+          // 1. Filtro Regex (Formato)
           const match = rawAddress.match(direccionRegex);
-
-          if (!match) continue;
+          if (!match) {
+            ignorados++;
+            continue;
+          }
 
           const calle = match[1].trim();
           const altura = parseInt(match[2]);
+          const keyDireccion = `${calle}-${altura}`;
+
+          // 2. Filtro Duplicados
+          if (direccionesVistas.has(keyDireccion)) {
+            console.log(`Dirección repetida ignorada: ${rawAddress} (${row.COMEDOR})`);
+            duplicados++;
+            continue;
+          }
+          direccionesVistas.add(keyDireccion);
+
           const nombreOrg = row.ASOCIACIÓN ? row.ASOCIACIÓN.trim() : 'SIN ASOCIACIÓN';
           const distrito = row.DISTRITO || 'Desconocido';
           const asistidos = parseInt(row['PERSONAS ASISTIDAS']) || 0;
@@ -99,10 +128,15 @@ async function importar() {
           `, [row.COMEDOR, direccionId, dniGenerico, orgId, asistidos]);
           
           process.stdout.write('.'); 
+          importados++;
         }
 
         await client.query('COMMIT');
-        console.log("\nMigración Local Finalizada!");
+        console.log(`\n\nResumen de Importación:`);
+        console.log(`- Importados: ${importados}`);
+        console.log(`- Ignorados (Formato inválido): ${ignorados}`);
+        console.log(`- Duplicados omitidos: ${duplicados}`);
+        
         client.release();
         pool.end();
       });
