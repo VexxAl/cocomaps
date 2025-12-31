@@ -56,7 +56,8 @@ En nuestra última actualización, **COCOMAPS** evolucionó su diseño para refl
 * **Process Manager**: PM2 (Cluster Mode)
 * **Web Server**: Nginx (Reverse Proxy + Static Serving)
 * **Base de Datos**: PostgreSQL 16
-* **Deploy**: Pipeline manual optimizado con Git Hooks (Futuro: CI/CD)
+
+> 📄 **Nota:** Para ver el detalle de la nueva estructura de DB, consultar el archivo [`cocomaps_DBStructure.pdf`](./cocomaps_DBStructure.pdf) incluido en este repositorio.
 
 ---
 
@@ -75,6 +76,7 @@ En nuestra última actualización, **COCOMAPS** evolucionó su diseño para refl
 * [x] **Mejoras UX:** Fix de "Scroll Trap" en mapas, botón de retorno, feedback visual en tarjetas.
 * [x] **SEO Técnico:** Open Graph tags para redes sociales, Manifest.json, Meta descriptions.
 * [x] **Optimización:** Refactorización de assets a SVG y limpieza de código.
+* [x] **Reestructuración de Base de Datos:** Nueva estructura para datos reales y mayor escalabilidad.
 
 ### 🚧 Fase 3: Gestión y Autonomía (Próximo Sprint)
 
