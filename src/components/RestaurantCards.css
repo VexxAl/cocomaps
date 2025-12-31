@@ -24,16 +24,19 @@
   transform: translateY(-5px);
 }
 
+.card-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-acento);
+}
+
 .restaurant-card h2 {
   font-size: 1.5em;
   color: var(--color-texto);
-  margin-bottom: 15px;
-  border-bottom: 2px solid var(--color-acento);
-  padding-bottom: 10px;
-
   min-height: 4rem;
   display: flex;
   align-items: center;
+  margin: 0;
 }
 
 .restaurant-card p {
