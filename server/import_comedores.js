@@ -3,13 +3,13 @@ const path = require('path');
 const { Pool } = require('pg');
 const csv = require('csv-parser');
 
-// CONFIGURACIÓN LOCAL
+// Completar con los datos de tu base de datos local o usar variables de entorno
 const pool = new Pool({
-  user: 'vex_al',
-  host: 'localhost',
-  database: 'cocomaps_develop',
-  password: 'dejamepasarporfa', 
-  port: 5432,
+  user: process.env.DB_USER || 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'cocomaps_db',
+  password: process.env.DB_PASSWORD || 'tu_contraseña', 
+  port: process.env.DB_PORT || 5432,
 });
 
 async function importar() {
