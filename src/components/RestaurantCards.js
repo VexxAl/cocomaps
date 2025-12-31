@@ -13,17 +13,14 @@ function RestaurantCards() {
         if (Array.isArray(response.data)) {
           setRestaurantes(response.data);
         } else {
-          console.error("Error: la API no devolvió un array", response.data);
           setError("Error al cargar los datos");
         }
       })
       .catch((error) => {
-        console.error("Error al obtener los comedores:", error);
+        console.error("Error:", error);
         setError("Error al conectar con el servidor");
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div className="loading">Cargando comedores...</div>;
@@ -34,68 +31,63 @@ function RestaurantCards() {
     <div className="restaurant-cards-container" id="comedores">
       {restaurantes.map((restaurante, index) => (
         <div className="restaurant-card" key={restaurante.id || index}>
-          <h2>{restaurante.nombre}</h2>
-          
-          {/* Agregamos la Asociación si es diferente al nombre (opcional) o siempre */}
-          {restaurante.asociacion && (
-            <p style={{ fontStyle: 'italic', color: '#666', marginBottom: '10px' }}>
-              <small>Asociación: {restaurante.asociacion}</small>
-            </p>
-          )}
+          <div className="card-header">
+            <h2>{restaurante.nombre}</h2>
 
-          {restaurante.calle && (
-            <p>
-              <strong>Dirección:</strong>{' '}
-              {`${restaurante.calle}`}
-            </p>
-          )}
-          {/* Mostramos el Distrito si existe */}
-          {restaurante.distrito && (
-            <p> 
-              <strong>Distrito:</strong>{' '}
-              {`${restaurante.distrito}`}
-            </p>
-          )}
-          {restaurante.telefono && (
-            <p>
-              <strong>Teléfono:</strong> {restaurante.telefono}
-            </p>
-          )}
-          {/* {restaurante.email && (
-            <p>
-              <strong>Email:</strong>{' '}
-              <a href={`mailto:${restaurante.email}`}>{restaurante.email}</a>
-            </p>
-          )}
-          {restaurante.web && (
-            <p>
-              <strong>Sitio web:</strong>{' '}
-              <a href={restaurante.web} target="_blank" rel="noopener noreferrer">
-                {restaurante.web}
-              </a>
-            </p>
-          )} */}
-          <p>
-            <strong>Horario:</strong>
-            <ul>
-              {restaurante.horario_lunes_a_viernes && (
-                <li>
-                  <strong>Lunes a viernes:</strong>{' '}
-                  {restaurante.horario_lunes_a_viernes}
-                </li>
+            {restaurante.organizacion && (
+                <p style={{ fontStyle: 'italic', color: '#666', marginBottom: '10px' }} className="org-badge">
+                  <small>Asociación: {restaurante.organizacion}</small>
+                </p>
+            )}
+          </div>
+          
+          <div className="card-body">
+              {/* DIRECCIÓN DINÁMICA: Calle + Altura*/}
+              
+              {restaurante.calle && restaurante.altura ? (
+              <p>
+                <strong>Dirección:</strong>{' '}
+                {`${restaurante.calle} ${restaurante.altura}`}
+              </p>
+              ) : null}
+
+              {restaurante.localidad && (
+                <p>
+                  <strong>Localidad:</strong>{' '}
+                  {` ${restaurante.localidad}`}
+                </p>
               )}
-              {restaurante.horario_sabado && (
-                <li>
-                  <strong>Sábado:</strong> {restaurante.horario_sabado}
-                </li>
+
+              {restaurante.distrito && (
+                <p style={{marginTop: '10px'}}>
+                  <strong className="distrito-tag">Distrito:</strong>{' '}
+                  <strong style={{ backgroundColor: 'var(--color-secundario)', color: 'var(--color-primario)', padding: '2px 6px', borderRadius: '6px' }}>{` ${restaurante.distrito}`}</strong>
+                </p>
               )}
-              {restaurante.horario_domingo && (
-                <li>
-                  <strong>Domingo:</strong> {restaurante.horario_domingo}
-                </li>
+
+              {restaurante.telefono && (
+                <p>
+                  <strong>Teléfono:</strong> {restaurante.telefono}
+                </p>
               )}
-            </ul>
-          </p>
+
+              {restaurante.horarios_apertura && (
+                <p>
+                  <strong>Horarios:</strong> {restaurante.horarios_apertura}
+                </p>
+              )}
+
+              {/* {restaurante.needs && restaurante.needs.length > 0 && (
+                <div className="needs-section">
+                  <strong>Necesitan:</strong>
+                  <ul className="needs-list">
+                    {restaurante.needs.map((need, i) => (
+                      <li key={i}>{need}</li>
+                    ))}
+                  </ul>
+                </div>
+              )} */}
+          </div>
         </div>
       ))}
     </div>
